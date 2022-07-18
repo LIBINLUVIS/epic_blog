@@ -4,6 +4,7 @@ import {UserProvider} from './Context/UserContext.js';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
+import Signup1 from './Pages/Signup1';
 import PrivateRoutes from './utils/PrivateRoutes';
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
         </Route>
         <Route  element={<Home/>} path="/" exact />
         <Route element={<Login/>} path="/signin" />
-        <Route  element={<Signup/>} path="/signup"/>   
+        <Route  element={<Signup/>} path="/signup"/>  
+        <Route element={<Signup1/>} path="/signup1"/>
         </Routes>
         </UserProvider>
       </Router>
