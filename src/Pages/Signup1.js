@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import '../Styles/Signup.css'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -10,11 +10,23 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import UserContext  from '../Context/UserContext';
+import Alert from '@mui/material/Alert';
 
 
 
 
 function Signup1() {
+     
+    let{signup,useralredyin}=useContext(UserContext);
+
+    const setpassword=(e)=>{ 
+        e.preventDefault();
+        let password=e.target.password.value;
+        localStorage.setItem("spassword",password);
+        signup();
+
+    }
 
     const [values, setValues] = React.useState({
         amount: '',
@@ -51,7 +63,7 @@ function Signup1() {
       <h style={{color:"#808080",fontSize:"20px"}}>Your Password</h>
     </div>
     <div >
-      <form onSubmit={""} className='loginauth'>
+      <form onSubmit={setpassword} className='loginauth'>
       {/* <TextField id="standard-basic" label="" variant="standard" style={{width:"400px"}} name="password" /> */}
       {/* {login field} */}
       <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
@@ -61,7 +73,9 @@ function Signup1() {
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
             onChange={handleChange('password')}
+            name="password"
             endAdornment={
+             
               <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
@@ -72,12 +86,21 @@ function Signup1() {
                   {values.showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
+              
+
             }
             // label="Password"
           />
         </FormControl>
-        {/* {login field} */}
-       <Button variant="contained" disableElevation style={{marginTop:"80px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
+        {useralredyin?<>
+          <Alert variant="outlined" severity="error" style={{marginTop:"30px"}}>
+          User already exists — check it out!
+        </Alert>
+        </>:<>
+        
+        </>}
+        {/* {login button} */}
+       <Button variant="contained" disableElevation style={{marginTop:"50px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
        Signup
        </Button>
       </form>
