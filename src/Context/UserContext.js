@@ -28,8 +28,9 @@ export const UserProvider = ({ children }) => {
         });
 
         await axios.post(loginapi,body,config).then((res)=>{
+          console.log(res.data)
           if(res.status==200){
-            navigate("/")
+            navigate("/authhome")
           }
 
         }).catch((err)=>{

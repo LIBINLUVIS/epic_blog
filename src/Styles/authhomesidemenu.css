@@ -1,0 +1,19 @@
+.v1{
+    border-left: 2px solid grey;
+    margin-left: 5%;
+    height: 750px;
+    position: fixed;
+}
+
+.side-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 28px;
+    
+}
+
+
+
+
+

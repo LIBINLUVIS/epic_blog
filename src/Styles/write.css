@@ -1,0 +1,21 @@
+.blog_section{
+    display: flex;
+    flex-direction: column;
+    margin-left: 350px;
+    margin-right: 350px;
+}
+.img_upload_tag{
+    display: flex;
+    margin-left: 350px;
+    margin-right: 350px;
+    justify-content: space-between;
+    margin-top: 80px;
+}
+.blog_body{
+    margin-left: 350px;
+    margin-right: 350px;
+    margin-top: 50px;
+}
+.write_section{
+    min-height: calc(100vh - 1536px);
+}

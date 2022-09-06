@@ -1,5 +1,6 @@
 import React,{useContext} from 'react'
 import '../Styles/Signup.css'
+import '../Styles/homemain.css'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +8,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
+import { Link } from "react-router-dom";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import UserContext  from '../Context/UserContext';
@@ -53,7 +54,10 @@ function Signup1() {
   return (
     <div className='main'>
     <div className='loginhead'>
-    <ArrowBackIcon style={{color:"#808080"}}/> <h>Go back</h>
+    <ArrowBackIcon style={{color:"#808080"}}/> 
+    <Link to='/signup' className="backlink">
+    <h>Go back</h>
+    </Link>
     </div>
     <div className='logintext'>
       <h1>Setup an Password</h1>
@@ -89,6 +93,7 @@ function Signup1() {
               
 
             }
+            required
             // label="Password"
           />
         </FormControl>

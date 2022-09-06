@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import UserContext  from '../Context/UserContext';
+import { Link } from "react-router-dom";
+import '../Styles/homemain.css'
 
 
 function Signup() {
@@ -22,7 +24,11 @@ function Signup() {
   return (
     <div className='main'>
     <div className='loginhead'>
-    <ArrowBackIcon style={{color:"#808080"}}/> <h>Go back</h>
+    <ArrowBackIcon style={{color:"#808080"}}/> 
+    <Link to='/' className="backlink">
+    <h>Go back</h>
+    </Link>
+    
     </div>
     <div className='logintext'>
       <h1>Sign up with Username</h1>
@@ -33,7 +39,7 @@ function Signup() {
     </div>
     <div >
       <form onSubmit={setusername} className='loginauth'>
-      <TextField id="standard-basic" label="" variant="standard" style={{width:"400px"}} name="username" />
+      <TextField id="standard-basic" label="" variant="standard" style={{width:"400px"}} name="username" required/>
        <Button variant="contained" disableElevation style={{marginTop:"80px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
        Continue
        </Button>
