@@ -9,6 +9,7 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import Authhome from './Pages/authhome';
 import Dashboard from './Pages/dashboard'
 import Write from './Pages/Write';
+import Read from './Pages/Read';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <UserProvider>
         <Routes>
         <Route element={<PrivateRoutes/>} >
-       
+
         </Route>
         <Route  element={<Home/>} path="/" exact />
         <Route element={<Login/>} path="/signin" />
@@ -26,6 +27,7 @@ function App() {
         <Route element={<Authhome/>} path="/authhome"/>
         <Route element={<Dashboard/>} path="/dashboard"/>
         <Route element={<Write/>} path="/write" />
+        <Route element={<Read/>} path="/Read" />
         </Routes>
         </UserProvider>
       </Router>
