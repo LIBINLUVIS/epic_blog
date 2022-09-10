@@ -1,17 +1,17 @@
 .home-main{
     display: flex;
     flex-direction: column;
-    margin: auto;
     align-items: center;
-    padding-bottom: 300px;
     width: auto;
-    height: 500px;
+    height: 100vh;
+    
 }
 .background{
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: relative; 
 }
+
 .img-text{
     position: absolute;
     color: white;
@@ -49,9 +49,6 @@
     cursor: pointer;
 }
 
-.home{
-    display: flex;
-}
 .backlink{
     text-decoration: none;
 }

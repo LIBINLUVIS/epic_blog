@@ -10,6 +10,8 @@ import Authhome from './Pages/authhome';
 import Dashboard from './Pages/dashboard'
 import Write from './Pages/Write';
 import Read from './Pages/Read';
+import Blogs from './Pages/Blogs'
+import Detailblog from './Pages/Detailblog';
 
 function App() {
   return (
@@ -28,8 +30,10 @@ function App() {
         <Route element={<Dashboard/>} path="/dashboard"/>
         <Route element={<Write/>} path="/write" />
         <Route element={<Read/>} path="/Read" />
+        <Route element={<Blogs/>} path="/blogs" />
+        <Route element={<Detailblog/>} path="blog"/>
         </Routes>
-        </UserProvider>
+        </UserProvider> 
       </Router>
     </div>
   );

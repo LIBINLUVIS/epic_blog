@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import '../Styles/read.css'
+import '../Styles/read.css';
+import Button from '@mui/material/Button';
 
 
 function Read() {
@@ -53,11 +54,16 @@ function Read() {
   return (
     <>
     <div className='topic_section'>
-        <div style={{display:"flex",margin:'30px'}}>
+        <div style={{display:"flex",justifyContent:'space-between',margin:'25px'}}>
+        <div style={{display:'flex',alignContent:'center'}}>
         <ArrowBackIcon style={{color:"#808080"}}/>
         <Link to="/authhome" style={{textDecorationLine:"none",color:"GrayText"}}>
         <h>Go back</h>
         </Link>
+        </div>
+        <Button variant="outlined" color="success">
+         Skip
+        </Button>
         </div>
 
         <div style={{display:'flex',justifyContent:'center'}}>
