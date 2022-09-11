@@ -28,7 +28,9 @@ function Authhome() {
     </div>
        <div style={{height:'50vh',borderRight:'1px solid black',color:'grey',
        display:'flex',flexDirection:'column',width:'100px',justifyContent:'center',alignItems:'center'}}>
-        <PersonIcon fontSize='large'/>
+        <Link to='/dashboard'>
+        <PersonIcon fontSize='large' style={{color:'grey'}}/>
+        </Link>
        </div> 
    </div>
      <div className='home-main'>

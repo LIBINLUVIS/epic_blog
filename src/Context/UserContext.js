@@ -90,13 +90,13 @@ export const UserProvider = ({ children }) => {
        })
         
     }
-    const checkauth=()=>{
-      var token = localStorage.getItem('user_token')
-      if(token){
-        setUsertoken(true)
-        // setUserauth(true)
-      }
+
+    const logout=()=>{
+      localStorage.removeItem('user_token')
+      navigate("/")
+
     }
+
 
     let contextData = {
         loginUser:loginUser,
@@ -108,7 +108,7 @@ export const UserProvider = ({ children }) => {
         userlogin:userlogin,
         loginerror:loginerror,
         networkerror:networkerror,
-        checkauth:checkauth
+        logout:logout
       }; 
     
       return (

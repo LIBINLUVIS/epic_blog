@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {Link} from 'react-router-dom'
 import "../Styles/dashboard.css"
@@ -8,11 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import CommentIcon from '@mui/icons-material/Comment';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UserContext from "../Context/UserContext";
 
 
 function Dashboard() {
+
+  let {logout} = useContext(UserContext);
   
   const [edit,setEdit]=useState(true)
 
@@ -24,6 +26,7 @@ function Dashboard() {
     setEdit(true)
     // post to database apis
   }
+  
    
   return (
     <div className='dashmain'>
@@ -34,7 +37,7 @@ function Dashboard() {
         <h>Go back</h>
         </Link>
         </div>
-        <h style={{fontWeight:"bold"}}>Logout</h>
+        <h style={{fontWeight:"bold",cursor:'pointer'}} onClick={logout}>Logout</h>
         </div>
       <div style={{display:"flex",justifyContent:"center",margin:"40px"}}>
         <h1>Profile Settings</h1>
