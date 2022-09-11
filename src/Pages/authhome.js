@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext,useEffect} from 'react'
 import "../Styles/authhomesidemenu.css"
 import "../Styles/homemain.css"
 import banner from "../assets/Frame.png"
@@ -7,11 +7,13 @@ import PersonIcon from '@mui/icons-material/Person';
 import CreateIcon from '@mui/icons-material/Create';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import HomeIcon from '@mui/icons-material/Home';
+import UserContext from "../Context/UserContext";
 
-function authhome() {
+function Authhome() {
+  
+
   return (
     <div className='home'>
-
     <div style={{overflow:'hidden',position:'fixed',backgroundColor:'white'}}>
       <div className='blog_side_icons'>
       <Link to='/'>
@@ -39,8 +41,12 @@ function authhome() {
       <div className='background'>
         <img src={banner} style={{height:"470px",width:"1123px"}}/>
         <h1 className="img-text">The home for great  <br></br> writers and readers</h1>
-        <button className='read-btn'>Start Reading</button>
+        <Link to='/Read'>
+        <button className='read-btn' >Start Reading</button>
+        </Link>
+        <Link to='/Write'>
         <button className='write-btn'>Start Writing</button>
+        </Link>
       </div> 
       <div style={{textAlign:'center',height:'50px',marginTop:'10px'}}>
        <hr style={{width:'1520px'}}></hr>
@@ -51,4 +57,4 @@ function authhome() {
   )
 }
 
-export default authhome
+export default Authhome

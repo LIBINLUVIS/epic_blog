@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import '../Styles/homemain.css'
 
 
+
+
 function Signup() {
   let{setUseralredyin}=useContext(UserContext);
   let navigate=useNavigate();
@@ -18,9 +20,8 @@ function Signup() {
     localStorage.setItem("susername",username);
     setUseralredyin(false);
     navigate("/signup1");
-
-    
   }
+
   return (
     <div className='main'>
     <div className='loginhead'>

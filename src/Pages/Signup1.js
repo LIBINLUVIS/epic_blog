@@ -13,13 +13,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import UserContext  from '../Context/UserContext';
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
 
 function Signup1() {
      
-    let{signup,useralredyin}=useContext(UserContext);
+    let{signup,useralredyin,usersignup}=useContext(UserContext);
 
     const setpassword=(e)=>{ 
         e.preventDefault();
@@ -105,9 +106,15 @@ function Signup1() {
         
         </>}
         {/* {login button} */}
-       <Button variant="contained" disableElevation style={{marginTop:"50px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
+        {usersignup?<>
+        <Button variant="contained" disableElevation style={{marginTop:"50px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
+         <CircularProgress style={{color:'white'}}/>
+       </Button>
+        </>:<>
+        <Button variant="contained" disableElevation style={{marginTop:"50px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
        Signup
        </Button>
+        </>}
       </form>
     </div>
 </div>

@@ -36,8 +36,12 @@ function Home() {
        <div className='background'>
          <img src={banner} style={{height:"470px",width:"1123px"}}/>
          <h1 className="img-text">The home for great  <br></br> writers and readers</h1>
+         <Link to="/Read">
          <button className='read-btn'>Start Reading</button>
+         </Link>
+         <Link to="/Write">
          <button className='write-btn'>Start Writing</button>
+         </Link>
        </div> 
        <div style={{textAlign:'center',height:'50px',marginTop:'10px'}}>
         <hr style={{width:'1520px'}}></hr>

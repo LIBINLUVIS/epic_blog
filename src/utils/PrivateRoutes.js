@@ -1,8 +1,11 @@
 import React from 'react'
+import {Navigate,Outlet} from 'react-router-dom'
 
-function PrivateRoutes() {
+
+const  PrivateRoutes=({children,...rest})=> {
+  
   return (
-    <div>PrivateRoutes</div>
+    localStorage.getItem('user_token') ? <Outlet/>: <Navigate to="/signin"/>
   )
 }
 
