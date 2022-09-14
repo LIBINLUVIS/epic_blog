@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import {Link} from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../Styles/write.css';
@@ -9,10 +9,16 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import Autocomplete from '@mui/material/Autocomplete';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import axios from 'axios'
+import CloseIcon from '@mui/icons-material/Close';
+import CopyAllIcon from '@mui/icons-material/CopyAll';
 
 
 function Write() {
+
     const [img,setImg]=useState(false)
+    const [spell,setSpell]=useState("")
+    const [result,setResult]=useState("")
     const options=[
         { label: 'Culture'},
         { label: 'Crypto' },
@@ -30,6 +36,28 @@ function Write() {
     const closeimg=()=>{
         setImg(false)
     }
+    const correctspell=(e)=>{
+       setSpell(e.target.value)
+       const spellapi="http://127.0.0.1:8000/api/spellcheck"
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify({
+          spell:e.target.value
+      });
+      axios.post(spellapi,body,config).then((res)=>{
+        setResult(res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+
+
+  console.log(result)
+  
+
   return (
     <>
      <div className='write_section'>
@@ -75,11 +103,31 @@ function Write() {
             renderInput={(params) => <TextField {...params} label="Topic" />}
             />
         </div>
+        <diV className="text_recomm">
+          <div style={{display:'flex',alignItems:'center',margin:'20px'}}>
+          <h>Spell checker</h>
+          </div>
+           <TextField fullWidth label="" 
+              color='success'
+              focused
+              InputProps={{
+                readOnly: true,
+              }}
+           value={result.result}
+           id="fullWidth" style={{width:'500px'}}/>
+           <div style={{display:'flex',alignItems:'center',margin:'20px'}}>
+           <CloseIcon style={{width:'30px',height:'30px',cursor:'pointer',color:'grey'}}/>
+           <CopyAllIcon style={{width:'30px',height:'30px',cursor:'pointer',color:'grey'}}/>
+           </div>
+        </diV>
+        {/* <TextField fullWidth label="fullWidth" id="fullWidth" /> */}
         <div className='blog_body'>
           <TextareaAutosize
           aria-label="empty textarea"
           placeholder="Body"
-          style={{ width: 840}}
+          style={{ width: 840,height:'200px'}}
+          onChange={event=>correctspell(event)} 
+          // onKeyDown={event=>handleSpace(event)} 
           />
         </div>
      </div>

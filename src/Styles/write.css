@@ -19,3 +19,15 @@
 .write_section{
     min-height: calc(100vh - 1536px);
 }
+.text_recomm{
+    margin-top: 50px;
+    display: flex;
+   
+    justify-content: center;
+    
+}
+.text_recomm h{
+    font-size: 25px;
+    font-family: sans-serif;
+}
+
