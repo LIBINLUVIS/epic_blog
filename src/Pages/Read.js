@@ -5,6 +5,7 @@ import '../Styles/read.css';
 import Button from '@mui/material/Button';
 
 
+
 function Read() {
     const [topics,setTopics]=useState([])
     const [selecttech,setSelecttech]=useState(false)
@@ -61,7 +62,7 @@ function Read() {
         <h>Go back</h>
         </Link>
         </div>
-        <Button variant="outlined" color="success">
+        <Button variant="outlined" color="warning">
          Skip
         </Button>
         </div>

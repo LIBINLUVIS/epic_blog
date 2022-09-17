@@ -11,7 +11,11 @@ import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOut
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import axios from 'axios'
 import CloseIcon from '@mui/icons-material/Close';
-import CopyAllIcon from '@mui/icons-material/CopyAll';
+import CopyAllIcon from '@mui/icons-material/CopyAll'; 
+import copy from "copy-to-clipboard";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from "@mui/material/Alert";
+
 
 
 function Write() {
@@ -19,6 +23,9 @@ function Write() {
     const [img,setImg]=useState(false)
     const [spell,setSpell]=useState("")
     const [result,setResult]=useState("")
+    const [blogwrite,setBlogwrite]=useState(false)
+    const [open, setOpen] = React.useState(false);
+    const [spellcheckbox,setSpellcheckbox]=useState(true)
     const options=[
         { label: 'Culture'},
         { label: 'Crypto' },
@@ -36,8 +43,25 @@ function Write() {
     const closeimg=()=>{
         setImg(false)
     }
-    const correctspell=(e)=>{
+    const textcopy=()=>{
+      var value=result.result
+      copy(value)
+      setOpen(true)
+    }
+    const spellcheckclose=()=>{
+      setSpellcheckbox(false)
+    }
+    const addspellcheck=()=>{
+      setSpellcheckbox(true)
+    }
+    // let cancelToken;
+    const correctspell=async(e)=>{
        setSpell(e.target.value)
+      //  if(typeof cancelToken!=typeof undefined){
+      //    cancelToken.cancel("canceling the previous req")
+      //  }
+      //  cancelToken=axios.CancelToken.source()
+       setBlogwrite(false)
        const spellapi="http://127.0.0.1:8000/api/spellcheck"
       const config = {
         headers: {
@@ -47,15 +71,23 @@ function Write() {
       const body = JSON.stringify({
           spell:e.target.value
       });
-      axios.post(spellapi,body,config).then((res)=>{
+      await axios.post(spellapi,body,config).then((res)=>{
         setResult(res.data)
+        setBlogwrite(true)
       }).catch((err)=>{
         console.log(err)
       })
     }
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
 
 
-  console.log(result)
+ 
   
 
   return (
@@ -103,31 +135,55 @@ function Write() {
             renderInput={(params) => <TextField {...params} label="Topic" />}
             />
         </div>
-        <diV className="text_recomm">
+        {spellcheckbox?<>
+          <diV className="text_recomm">
           <div style={{display:'flex',alignItems:'center',margin:'20px'}}>
           <h>Spell checker</h>
           </div>
-           <TextField fullWidth label="" 
-              color='success'
-              focused
+           {/* <Textarea 
               InputProps={{
-                readOnly: true,
+                readOnly: false,
               }}
            value={result.result}
-           id="fullWidth" style={{width:'500px'}}/>
+           id="fullWidth" style={{width:'500px'}}/> */}
+           {blogwrite?<>
+            <TextField id="outlined-basic"
+            value={result.result} variant="outlined" 
+            focused
+            color='grey'
+            style={{width:'500px'}}/>
+           </>:<>
+           <TextField id="outlined-basic"
+            value={result.result} variant="outlined" 
+            focused
+            color='success'
+            style={{width:'500px'}}/>
+           </>}
            <div style={{display:'flex',alignItems:'center',margin:'20px'}}>
-           <CloseIcon style={{width:'30px',height:'30px',cursor:'pointer',color:'grey'}}/>
-           <CopyAllIcon style={{width:'30px',height:'30px',cursor:'pointer',color:'grey'}}/>
+           <CloseIcon style={{width:'30px',height:'30px',cursor:'pointer',color:'grey'}} onClick={spellcheckclose}/>
+           <CopyAllIcon style={{width:'30px',height:'30px',
+           cursor:'pointer',color:'grey'}} onClick={textcopy}/>
            </div>
         </diV>
+        </>:<>
+        <div className='text_recomm1'>
+        <AddCircleOutlineOutlinedIcon style={{color:'#bdbdbd',width:'50px',height:'50px',cursor:'pointer'}} onClick={addspellcheck}/>
+        </div>
+        </>}
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert  severity="success" sx={{ width: '100%' }} onClose={handleClose}>
+          content copied!
+        </Alert>
+      </Snackbar>
         {/* <TextField fullWidth label="fullWidth" id="fullWidth" /> */}
         <div className='blog_body'>
           <TextareaAutosize
           aria-label="empty textarea"
           placeholder="Body"
-          style={{ width: 840,height:'200px'}}
+          style={{ width: 840,height:'200px',fontSize:'20px',
+          fontFamily:'Roboto'}}
           onChange={event=>correctspell(event)} 
-          // onKeyDown={event=>handleSpace(event)} 
+           
           />
         </div>
      </div>

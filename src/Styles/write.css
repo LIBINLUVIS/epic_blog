@@ -22,8 +22,14 @@
 .text_recomm{
     margin-top: 50px;
     display: flex;
-   
     justify-content: center;
+    
+}
+.text_recomm1{
+    margin-top: 50px;
+    display: flex;
+    justify-content: right;
+    margin-right: 350px;
     
 }
 .text_recomm h{
