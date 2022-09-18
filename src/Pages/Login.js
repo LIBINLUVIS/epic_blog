@@ -8,11 +8,23 @@ import "../Styles/homemain.css"
 import {Link} from "react-router-dom"
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import { makeStyles } from '@material-ui/core/styles'; 
 
 
+
+const useStyles=makeStyles((theme)=>({
+  textField: {
+    width: 400,
+    [theme.breakpoints.down("md")]: {
+      width: 300,
+    }, 
+  }
+}))
 
 function Login() {
+  const classes=useStyles();
   let {loginUser,userlogin,loginerror,networkerror} = useContext(UserContext);
+  
 
 
   return (
@@ -26,10 +38,10 @@ function Login() {
         <div className='logintext'>
           <h1>Login</h1>
         </div>
-        <div >
+        <div>
           <form onSubmit={loginUser} className='loginauth'>
-          <TextField id="standard-basic" label="Username" variant="standard" style={{width:"400px"}} name="username" required/>
-           <TextField id="standard-basic" label="Password" variant="standard" style={{width:"400px",marginTop:"50px"}} name="password"/>
+          <TextField id="standard-basic" label="Username" variant="standard"  className={classes.textField}  name="username" required/>
+           <TextField id="standard-basic" label="Password" variant="standard"  className={classes.textField} name="password"/>
            {loginerror?<>
             <Alert variant="outlined" severity="error" style={{marginTop:'10px'}}>
             Password or Username incorrect — check it out!
@@ -55,4 +67,4 @@ function Login() {
   )
 }
 
-export default Login
+export default Login 

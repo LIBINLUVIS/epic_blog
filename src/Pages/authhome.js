@@ -16,7 +16,7 @@ function Authhome() {
     <div className='home'>
     <div style={{overflow:'hidden',position:'fixed',backgroundColor:'white'}}>
       <div className='blog_side_icons'>
-      <Link to='/'>
+      <Link to='/authhome'>
       <HomeIcon style={{color:"grey"}} fontSize='large'/>
       </Link>
        <Link to='/write'>

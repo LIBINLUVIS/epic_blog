@@ -52,3 +52,58 @@
 .backlink{
     text-decoration: none;
 }
+
+/* @media only screen and (min-width: 600px){
+.home{
+    background-color: red;
+}
+.fotter_mobile{
+  display: none;
+}
+} */
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+	#home_banner_img{
+        width: 550px;
+        height: 430px;
+    }
+    .img-text{
+        font-size: 35px;
+        left: 25%;
+    }
+    .read-btn{
+       left: 32%;
+    }
+    .write-btn{
+       left: 32%;
+    }
+}
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+	#home_banner_img{
+        width: 750px;
+        height: 430px;
+    }
+}
+@media only screen and (max-width: 600px){
+   .img-text{
+    font-size: 30px;
+    left: 20%;
+   }
+   .read-btn{
+    left: 25%;
+   }
+   .write-btn{
+    left: 25%;
+   }
+}
+@media only screen and (min-width: 1000px) and (max-width: 1120px) {
+	#home_banner_img{
+        width: 950px;
+        height: 430px;
+    }
+}
+@media only screen and (min-width: 1120px) and (max-width: 1285px) {
+	#home_banner_img{
+        width: 950px;
+        height: 410px;
+    }
+}

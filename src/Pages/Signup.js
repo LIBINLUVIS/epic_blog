@@ -7,11 +7,27 @@ import { useNavigate } from "react-router-dom";
 import UserContext  from '../Context/UserContext';
 import { Link } from "react-router-dom";
 import '../Styles/homemain.css'
+import { makeStyles } from '@material-ui/core/styles'; 
 
 
 
+const useStyles=makeStyles((theme)=>({
+  textField: {
+    width: 400,
+    [theme.breakpoints.down("md")]: {
+      width: 300,
+    }, 
+  },
+  signup_username_text:{
+    fontSize:40,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 30,
+    }, 
+  },
+}))
 
 function Signup() {
+  const classes=useStyles();
   let{setUseralredyin}=useContext(UserContext);
   let navigate=useNavigate();
   const setusername=(e)=>{
@@ -32,7 +48,7 @@ function Signup() {
     
     </div>
     <div className='logintext'>
-      <h1>Sign up with Username</h1>
+      <h1  className={classes.signup_username_text}>Sign up with Username</h1>
       <p>Enter an username to create an <br/><p style={{marginLeft:"35%"}}>account</p></p>
     </div>
     <div style={{display:'flex',justifyContent:"center",marginTop:"30px"}}>
@@ -40,7 +56,7 @@ function Signup() {
     </div>
     <div >
       <form onSubmit={setusername} className='loginauth'>
-      <TextField id="standard-basic" label="" variant="standard" style={{width:"400px"}} name="username" required/>
+      <TextField id="standard-basic" label="" variant="standard"  className={classes.textField} name="username" required/>
        <Button variant="contained" disableElevation style={{marginTop:"80px",borderRadius:"50px",width:"300px",height:"60px",backgroundColor:"#FF6719"}} type="submit">
        Continue
        </Button>

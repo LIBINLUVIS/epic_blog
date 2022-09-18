@@ -14,12 +14,22 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import UserContext  from '../Context/UserContext';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles'; 
 
 
+
+const useStyles=makeStyles((theme)=>({
+  signup1_username_text:{
+    fontSize:40,
+    [theme.breakpoints.down("md")]: {
+      fontSize: 30,
+    }, 
+  },
+}))
 
 
 function Signup1() {
-     
+    const classes=useStyles();
     let{signup,useralredyin,usersignup}=useContext(UserContext);
 
     const setpassword=(e)=>{ 
@@ -61,7 +71,7 @@ function Signup1() {
     </Link>
     </div>
     <div className='logintext'>
-      <h1>Setup an Password</h1>
+      <h1 className={classes.signup1_username_text}>Setup an Password</h1>
       <p>Enter an Password to create an <br/><p style={{marginLeft:"35%"}}>account</p></p>
     </div>
     <div style={{display:'flex',justifyContent:"center",marginTop:"30px"}}>
