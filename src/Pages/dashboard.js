@@ -42,6 +42,9 @@ function Dashboard() {
       <div style={{display:"flex",justifyContent:"center",margin:"40px"}}>
         <h1>Profile Settings</h1>
       </div>
+
+
+
       <div className='profile'>
         <div className='pic_username'>
          <div className='profile_pic'>
@@ -53,13 +56,6 @@ function Dashboard() {
             <h>Username</h>
           </div>
           <div style={{display:"flex"}}>
-          {/* <TextField
-          id="standard-helperText"
-          label=""
-          defaultValue="Libin"
-          helperText=""
-          variant="standard"
-        /> */}
           <TextField
           id="standard-read-only-input"
           label=""
@@ -78,13 +74,8 @@ function Dashboard() {
           border:'none',marginTop:'20px',width:'60px',height:"30px",cursor:'pointer'}} 
           onClick={changeusername}>Save</button>
           </>}
-          
          </div>
         </div>
-        <div>
-
-        </div>
-
 
         <div className='change_password'>
           <h style={{marginTop:"10px"}}>Change Password</h>
@@ -112,10 +103,10 @@ function Dashboard() {
         <h1>Posts</h1>
 
         <div className='user_posts'>
-          {/* {for loop} */}
+         
         <div className='user_post'>
          <div className='post_head'>
-           <h>test post</h>
+           <h>demo post</h>
          </div>
          <div className='post_content'>
           <span style={{color:'#808080'}}>jan 8 at 8:10 pm</span>
@@ -133,7 +124,7 @@ function Dashboard() {
           </div>
         </div>
         <div className='user_post'></div>
-         {/*  */}
+         
         </div>
       </div>
 

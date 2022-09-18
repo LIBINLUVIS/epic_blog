@@ -5,10 +5,11 @@
 }
 .profile{
     display: flex;
-    margin-left: 300px;
+    justify-content: center;
 }
 .pic_username{
     display: flex;
+   
 }
 .profile_username{
     display: flex;
@@ -24,7 +25,7 @@
 .user_posts_head{
     display: flex;
     flex-direction: column;
-    padding-left: 320px;
+    align-items: center;
     padding-top: 20px;
 }
 .user_post{
@@ -62,4 +63,34 @@
     margin: 10px;
     margin-left: 40%;
    
+}
+@media only screen and (max-width: 900px){
+   .profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+   .change_password{
+    display: flex;
+    flex-direction: column;
+    margin-left: 0px;
+    margin-top: 20px;
+    width: 380px;
+   }
+   .user_posts{
+    width: 600px;
+   }
+   .user_post{
+    width: 598px;
+   }
+  
+
+}
+@media only screen and (max-width:635px){
+    .user_posts{
+        width: 350px;
+    }
+    .user_post{
+        width: 348px;
+    }
 }
