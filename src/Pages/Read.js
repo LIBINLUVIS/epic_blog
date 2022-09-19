@@ -70,17 +70,17 @@ function Read() {
         <div style={{display:'flex',justifyContent:'center'}}>
             <h1>Dive into your interests</h1>
         </div>
-        <div style={{display:'flex',justifyContent:'center'}}>
+        <div  className='reading_recommentation_text'>
             <p style={{color:'grey'}}>We'll recommend top publications based on the topics you select</p>
         </div>
-        <div style={{marginLeft:'450px',marginRight:'450px',marginTop:'80px'}}>
+        <div  className='reading_topics'>
             <div style={{display:'flex',justifyContent:'space-between',margin:'20px'}}>
               {topicslist1.map(topic=>{
                 return(
                  <>
                  {topic.select?<>
                 <button className='each_ele' onClick={event=>removetopic(event,topic)} 
-                style={{backgroundColor:'#FF6719',color:'white'}} >
+                style={{backgroundColor:'#808080',color:'white'}} >
                <h>{topic.name}</h>
                </button>
                  </>:<>
@@ -89,7 +89,6 @@ function Read() {
                </button>
                  </>}
                  </>
-          
                 )
               })}
             </div>
@@ -100,7 +99,7 @@ function Read() {
                  <>
                  {topic.select?<>
                 <button className='each_ele' onClick={event=>removetopic(event,topic)} 
-                style={{backgroundColor:'#FF6719',color:'white'}} >
+                style={{backgroundColor:'#808080',color:'white'}} >
                <h>{topic.name}</h>
                </button>
                  </>:<>
@@ -121,7 +120,7 @@ function Read() {
                  <>
                  {topic.select?<>
                 <button className='each_ele' onClick={event=>removetopic(event,topic)} 
-                style={{backgroundColor:'#FF6719',color:'white'}} >
+                style={{backgroundColor:'#808080',color:'white'}} >
                <h>{topic.name}</h>
                </button>
                  </>:<>
@@ -141,7 +140,7 @@ function Read() {
             <button className='cont_btn'>Continue</button>
         </div>
     </div>
-        <div style={{textAlign:'center',height:'50px',marginTop:'100px'}}>
+        <div style={{textAlign:'center',height:'80px',bottom:'0px',width:'100%',position:'fixed'}}>
         <hr style={{width:'99%'}}></hr>
          <p>© 2022   All rights reserved.</p>
       </div>

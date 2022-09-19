@@ -15,11 +15,49 @@ import CopyAllIcon from '@mui/icons-material/CopyAll';
 import copy from "copy-to-clipboard";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from "@mui/material/Alert";
+import { makeStyles } from '@material-ui/core/styles'; 
 
 
+
+const useStyles=makeStyles((theme)=>({
+    blog_section : {
+      display:'flex',
+      flexDirection:'column',
+      marginLeft:'350px',
+      marginRight:'350px',
+    [theme.breakpoints.down("md")]: {
+      display:'flex',
+      flexDirection:'column',
+      alignItems:'center',
+      margin:'20px'
+    }, 
+  },
+  blog_body_content:{
+    width:'840px',
+    height:'200px',
+    fontSize:'20px',
+    fontFamily:'Roboto',
+    [theme.breakpoints.down("xs")]:{
+      width:'300px',
+      height:'200px'
+
+    },
+  },
+  blog_body:{
+    marginLeft:'350px',
+    marginRight:'350px',
+    marginTop:'50px',
+    [theme.breakpoints.down("xs")]:{
+       marginLeft:'10%',
+       marginTop:'50px'
+    }
+  }
+
+
+}))
 
 function Write() {
-
+    const classes=useStyles();
     const [img,setImg]=useState(false)
     const [spell,setSpell]=useState("")
     const [result,setResult]=useState("")
@@ -106,7 +144,7 @@ function Write() {
         </button>
         </div>
 
-        <div className='blog_section'>
+        <div className={classes.blog_section}>
         <TextField
           id="standard-helperText"
           label=""
@@ -118,7 +156,8 @@ function Write() {
         </div>
 
         <div className='img_upload_tag'>
-        <div>
+      
+        <div className='upload_icons'>
             {img?<>
             <RemoveCircleOutlineOutlinedIcon style={{color:'#bdbdbd',width:'60px',height:'60px',cursor:'pointer'}} onClick={closeimg}/>
             <CameraAltIcon style={{color:'#bdbdbd',width:'55px',height:'55px',cursor:'pointer'}}/>
@@ -134,19 +173,15 @@ function Write() {
             sx={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Topic" />}
             />
-        </div>
+        </div> 
+        
         {spellcheckbox?<>
           <diV className="text_recomm">
           <div style={{display:'flex',alignItems:'center',margin:'20px'}}>
           <h>Spell checker</h>
           </div>
-           {/* <Textarea 
-              InputProps={{
-                readOnly: false,
-              }}
-           value={result.result}
-           id="fullWidth" style={{width:'500px'}}/> */}
-           {blogwrite?<>
+            <div style={{display:'flex'}}>
+            {blogwrite?<>
             <TextField id="outlined-basic"
             value={result.result} variant="outlined" 
             focused
@@ -164,30 +199,32 @@ function Write() {
            <CopyAllIcon style={{width:'30px',height:'30px',
            cursor:'pointer',color:'grey'}} onClick={textcopy}/>
            </div>
+            </div>
         </diV>
         </>:<>
         <div className='text_recomm1'>
         <AddCircleOutlineOutlinedIcon style={{color:'#bdbdbd',width:'50px',height:'50px',cursor:'pointer'}} onClick={addspellcheck}/>
         </div>
         </>}
+
+
         <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert  severity="success" sx={{ width: '100%' }} onClose={handleClose}>
           content copied!
         </Alert>
       </Snackbar>
-        {/* <TextField fullWidth label="fullWidth" id="fullWidth" /> */}
-        <div className='blog_body'>
+       
+        <div className={classes.blog_body}>
           <TextareaAutosize
           aria-label="empty textarea"
           placeholder="Body"
-          style={{ width: 840,height:'200px',fontSize:'20px',
-          fontFamily:'Roboto'}}
+          className={classes.blog_body_content}
           onChange={event=>correctspell(event)} 
-           
           />
         </div>
      </div>
-    <div style={{textAlign:'center',height:'50px',marginTop:'307px'}}>
+
+     <div style={{textAlign:'center',height:'50px',marginTop:'307px'}}>
       <hr style={{width:'99%'}}></hr>
        <p>© 2022   All rights reserved.</p>
     </div>

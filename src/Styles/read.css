@@ -28,3 +28,26 @@
     border: none;
     border-radius: 20px;
 }
+.reading_topics{
+    margin-left: 450px;
+    margin-right: 450px;
+    margin-top: 80px;
+}
+.reading_recommentation_text{
+    display: flex;
+    justify-content: center;
+}
+@media only screen and (max-width:500px) {
+ .reading_topics{
+    margin-left: 0%;
+    margin-right: 0%;
+ }
+ .cont_btn{
+    width: 350px;
+ }
+ .reading_recommentation_text{
+    margin-left: 8%;
+   
+ }
+
+}
