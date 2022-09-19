@@ -124,7 +124,6 @@ function Dashboard() {
           </div>
         </div>
         <div className='user_post'></div>
-         
         </div>
       </div>
 

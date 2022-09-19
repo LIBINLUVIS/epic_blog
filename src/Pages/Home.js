@@ -68,8 +68,10 @@ function Home() {
          <button className='write-btn'>Start Writing</button>
          </Link>
        </div> 
-       <div style={{textAlign:'center',height:'50px',marginTop:'10px'}} className={classes.fotter_hide}>
-        <hr style={{width:'1520px'}}></hr>
+       <div style={{textAlign:'center',height:'50px',bottom:'0px',
+       position:'fixed',width:'100%',borderStyle:'solid',
+       borderWidth:'thin',borderColor:'grey',zIndex:'-1'
+      }} className={classes.fotter_hide}>
          <p>© 2022   All rights reserved.</p>
        </div>
 

@@ -101,9 +101,21 @@
         height: 430px;
     }
 }
+
 @media only screen and (min-width: 1120px) and (max-width: 1285px) {
 	#home_banner_img{
         width: 950px;
         height: 410px;
     }
+}
+
+@media only screen and (min-width:1366px) and (max-width:1450px){
+    #home_banner_img{
+        width: 950px;
+        height: 380px;
+    }
+    .img_text{
+      font-size: 30px;
+      left: 37%;
+    } 
 }
