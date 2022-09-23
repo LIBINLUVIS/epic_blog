@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {Link} from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
@@ -25,7 +26,7 @@ function Detailblog() {
     } 
   return ( 
     <>
-    <div style={{overflow:'hidden',position:'fixed',backgroundColor:'white'}}>
+    <div style={{overflow:'hidden',position:'fixed',backgroundColor:'white'}} className='hide_fotter_1'>
         <div className='blog_side_icons'>
             <HomeIcon id='home_icon_blog' fontSize='large'/>
             <EditIcon id='edit_icon_blog' fontSize='large'/>
@@ -85,9 +86,10 @@ function Detailblog() {
     </div>
     <hr></hr>
     <div className='comment_sec'>
-     <AccountCircleTwoToneIcon style={{marginRight:'20px'}}/>
+     {/* <AccountCircleTwoToneIcon style={{marginRight:'20px'}}/> */}
      <div className='comment_text'>
-     <TextField
+      <div className='comment_box_sec'>
+      <TextField
           id="standard-textarea"
           label=""
           placeholder="Write a comment"
@@ -95,12 +97,14 @@ function Detailblog() {
           variant="standard"
           fullWidth
         />
+      </div>
     <div style={{display:'flex',justifyContent:'flex-end',paddingTop:'10px'}}>
     <Button variant="outlined" style={{marginRight:'10px'}}>cancel</Button>
     <Button variant="outlined">comment</Button>
     </div>
      </div>
     </div>
+    
     <div className='message_section'>
     <h style={{fontSize:'20px',fontWeight:'bold'}}>Comments</h>
     <div className='comments_user'>
@@ -132,7 +136,26 @@ function Detailblog() {
       </div>
     </div>
     </div>
-    <div style={{textAlign:'center',height:'50px',marginTop:'10px'}}>
+
+    <div className='fotter_mobile_blog_sec'>
+       <div style={{display:'flex',justifyContent:'space-between',zIndex:'-1',
+       marginLeft:'20%',marginRight:'20%',marginTop:'30px',alignItems:'center'}}>
+        <Link to='/authhome' >
+        <HomeIcon  fontSize='large' style={{color:'grey'}}/>
+        </Link>
+        <Link to='/write'>
+        <EditIcon  fontSize='large' style={{color:'grey'}}/>
+        </Link>
+        <Link to=''>
+        <AutoStoriesIcon  fontSize='large' style={{color:'grey'}}/>
+        </Link>
+        <Link to='/dashboard'>
+        <PersonIcon fontSize='large' style={{color:'grey'}}/>
+        </Link>
+       </div>
+      </div>
+
+    <div style={{textAlign:'center',height:'50px',marginTop:'10px'}} className='hide_fotter_1'>
         <hr style={{width:'99%'}}></hr>
         <p>© 2022   All rights reserved.</p>
     </div>

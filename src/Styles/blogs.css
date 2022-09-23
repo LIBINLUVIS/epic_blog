@@ -1,11 +1,15 @@
-.blog_side_icons{
+.main_blogs_container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.blogs_side_icons{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     width: 100px;
     height: 65vh;
     align-items: center;
-    /* justify-content: center; */
     color: grey;
     border-right: 1px solid black;
  
@@ -25,43 +29,13 @@
     margin-right: 120px;
 }
 
-.blogs{
-    /* display: flex;
-    flex-direction: column; */
-    
-    height: 500px;
-    width: 1000px;
-    margin-left: 250px;
-    margin-right: 100px;
-    overflow-y: scroll;
-    margin-top: 10px;
-    padding-left: 120px;
-    position: relative;
-    
 
-}
-.blog_box{
-    width: 800px;
-    height: 200px;
-    margin: 10px;
-    border: 1px solid black;
+  
 
-}
 .blog_box:hover{
     background-color: #EDEDED;
-    
 }
-.chatbot{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 100px;
-    margin-right: 70px;
-    margin-top: 450px;
-    
 
-}
 .ineer_blog_head{
     display: flex;
     justify-content: space-between;
@@ -78,42 +52,40 @@
     height: 110px;
     width: 150px;
     margin-left: 25px;
-    
 }
 .inner_blog_body p{
     margin: 15px;
 }
+
+
 .outer_blog{
     display: flex;
+    justify-content: space-between;
+}
 
-}
-.chatbot img{
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-}
+
+
+
 .chat_area{
     width: 300px;
     height: 450px;
-    position: absolute;
+    
     background-color: white;
-    margin-left: 1120px;
+    margin-left: 1250px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
     border: 1px solid black;
-    
 }
+
 .cross_icon{
     display: flex;
     width: 100%;
     margin: 10px;
     justify-content: flex-end;
-    /* background-color: red; */
 }
 .message_box{
-    
     height: 350px;
     width: 100%;
     overflow-y: scroll;
@@ -135,12 +107,10 @@
     align-items: center;
 }
 .bot_result{
-
     border: 1px solid grey;
     border-radius: 50px;
     margin: 10px;
     padding: 5px;
-
 } 
 .text_box{
     display: flex;
@@ -166,9 +136,227 @@
     border: 1px solid grey;
     border-radius: 50px;
 }
-.blogs::-webkit-scrollbar{
-    display: none;
-}
+
 .message_box::-webkit-scrollbar{
     display: none;
 }
+.blogs_scroll::-webkit-scrollbar{
+    display: none;
+}
+.blog_sec_sidemenu{
+    overflow: hidden;
+    position: fixed;
+    background-color: white;
+}
+.fotter_mobile_blogs_sec{
+    display: none;
+}
+.blog_section{
+    display: flex;
+    height: 550px;
+ 
+}
+.blogs{
+ 
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-left: 350px;
+    width: 800px;
+  
+}
+.chat_bot{
+    display: flex;
+}
+.chat_area1{
+ 
+    width: 300px;
+   position: relative;
+   right: 200px;
+    height: 400px;
+    background-color:white;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid black;
+    
+}
+.chat_area2{
+    width: 300px;
+    position: relative;
+    right:200px;
+    height: 400px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.blogs_scroll{
+  height: 500px;
+  overflow-y: scroll;
+}
+.blog_box{
+    margin-top: 5px;
+    height: 200px;
+    border: 1px solid black;
+
+}
+
+.chatbot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    right: 250px;
+    margin-top: 465px;
+}
+.chatbot img{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: fixed;
+}
+@media only screen and (min-width:985px) and (max-width:1370px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .blogs{
+        margin-left: 240px;
+        margin-right: 240px;
+    }
+    .blog_head{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+
+
+}
+@media only screen and (min-width:800px) and (max-width:984px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .blogs{
+        margin-left: 110px;
+        margin-right: 110px;
+    }
+    .blog_head{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+
+
+}
+@media only screen and (min-width:700px) and (max-width:799px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .blogs{
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+    .blog_head{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+
+
+}
+@media only screen and (min-width:501px) and (max-width:699px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .blogs{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .blog_head{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+
+
+}
+@media only screen and (min-width:501px) and (max-width:535px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .blogs{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .inner_blog_body p{
+        font-size: 10px;
+    }
+    .blog_head{
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+
+
+}
+@media only screen and (max-width:500px){
+    .blog_sec_sidemenu{
+        display: none;
+    }
+    .inner_blog_body p{
+        font-size: 10px;
+    }
+    .inner_blog_body img{
+        height: 80px;
+        width: 80px;
+    }
+    .chat_bot{
+        display: none;
+    }
+    .blog_head{
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+    .blog_box{
+        margin-top: 5px;
+    }
+    .blogs{
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+
+
+    
+}
+
+

@@ -6,9 +6,11 @@
 .profile{
     display: flex;
     justify-content: center;
+    
 }
 .pic_username{
     display: flex;
+    
    
 }
 .profile_username{
@@ -31,14 +33,17 @@
 .user_post{
     background-color:#EDEDED;
     height: 250px;
-    width: 800px;
+    width: 900px;
     margin-top: 10px;
+    margin-left: 1%;
 }
 .user_posts{
+    
     height: 300px;
-    width: 820px;
+    width: 900px;
     overflow-y: scroll;
     scroll-behavior: smooth;
+  
     
 }
 .user_posts::-webkit-scrollbar{
