@@ -1,11 +1,12 @@
-import React, { useState,useRef } from 'react'
+import React,{useEffect,useState} from 'react'
+import { useParams } from 'react-router-dom'
 import {Link} from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../Styles/write.css';
 import TextField from '@mui/material/TextField';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import Alert from "@mui/material/Alert";
+import VideocamIcon from '@mui/icons-material/Videocam';
 import Autocomplete from '@mui/material/Autocomplete';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
@@ -14,8 +15,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import CopyAllIcon from '@mui/icons-material/CopyAll'; 
 import copy from "copy-to-clipboard";
 import Snackbar from '@mui/material/Snackbar';
-import CircularProgress from '@mui/material/CircularProgress';
+import Alert from "@mui/material/Alert";
 import { makeStyles } from '@material-ui/core/styles'; 
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 
@@ -56,7 +58,8 @@ const useStyles=makeStyles((theme)=>({
 
 }))
 
-function Write() {
+function UpdateWrite() {
+    const {id}=useParams()
     const classes=useStyles();
     const [img,setImg]=useState(false)
     const [spell,setSpell]=useState("")
@@ -65,8 +68,8 @@ function Write() {
     const [open, setOpen] = React.useState(false);
     const [spellcheckbox,setSpellcheckbox]=useState(true)
     const [topicvalue,setTopicvalue]=useState("")
-    const [publish,setPublish]=useState(false)
     const [publishalert,setPublishalert]=useState(false) 
+    const [publish,setPublish]=useState(false)
     const [postimg,setPostimg]=useState({
       selectedFile:null
     })
@@ -75,60 +78,48 @@ function Write() {
       topic:"",
       description:""
     })
+
+    useEffect(()=>{
+       axios.get(`http://localhost:5000/api/posts/fetchonepost/${id}`).then((res)=>{
+        setBlogpost({
+            title:res.data.title,
+            topic:res.data.topic,
+            description:res.data.description
+        })
+       })
+    },[])
+
     const { title,topic,description } = blogpost;
     const onChange = e => setBlogpost({ ...blogpost, [e.target.name]: e.target.value });
 
-  //  const  uploadpostimage=(e)=>{
-  //   const fd=new FormData();
-  //   fd.append('postimg',postimg.selectedFile);
-  //   }
-    var fd=new FormData();
-   
-    const onSubmit=e=>{
-      e.preventDefault(); 
-      fd.append('description',description)
-      axios({
-        method: "post",
-        url: "http://localhost:5000/api/posts/createPost",
-        data: fd,
-        headers: { "Content-Type": "multipart/form-data",
-        "auth-token": localStorage.getItem('user_token') },
-      }).then((res)=>{
-        console.log(res.data)
+
+    const updateblogpost=e=>{
+      e.preventDefault();
+      setPublish(true)
+      console.log(title)
+      console.log(topic)
+      console.log(description)
+      if(localStorage.getItem('user_token')){
+        const updateapi=`http://localhost:5000/api/posts/updatePost/${id}`;
+        const config = {
+          headers: {
+              'Content-Type': 'application/json',
+              'auth-token': localStorage.getItem('user_token'),   
+       
+          }
+      };
+     
+      const body=JSON.stringify({title:title,topic:topicvalue,description:description});
+  
+      axios.put(updateapi,body,config).then((res)=>{
+        console.log("blog post updated")
+        setPublishalert(true)
+        setPublish(false)
       }).catch((err)=>{
         console.log(err.data)
       })
-
-      // fd.append('title',title)
-      // fd.append('description',description)
-      // fd.append('topic',topicvalue)
-      // fd.append('postimg',postimg.selectedFile)
-      // setPublish(true)
-      // // console.log(postimg.selectedFile)
-      // console.log(title)
-      // console.log(topicvalue)
-      // console.log(description)
-      // console.log(fd)
- 
-      //   const postapi="http://localhost:5000/api/posts/createPost";
-      //   const config = {
-      //     headers: {
-      //         'Content-Type': 'multipart/form-data',
-      //         'auth-token': localStorage.getItem('user_token'),   
-      //     }
-      // };
-      // // const body=JSON.stringify({title:title,topic:topicvalue,description:description});
-     
-      // axios.post(postapi,,config).then((res)=>{
-      //   setPublish(false)
-      //   setPublishalert(true)
-      //   console.log(res.data)
-      // }).catch((err)=>{
-      //   console.log("fuckk")
-      //   console.log(err.data)
-      // })
+      }
       
-   
     }
    
 
@@ -205,23 +196,16 @@ function Write() {
     document.getElementById("blogimg").click()  
    }
    const FileSelectHandler = event=>{
-
-    if(event.target && event.target.files[0]){
-      console.log("pic")
-      
-      fd.append('postimg',event.target.files[0])
-      console.log(fd.postimg)
-    }
     
-    // setPostimg({
-    //   selectedFile:event.target.files[0]
-    // })
+    setPostimg({
+      selectedFile:event.target.files[0]
+    })
     
    }
    const closemsg=()=>{
-      setPublishalert(false)
-   }
-   
+    setPublishalert(false)
+ }
+ 
 
  
   
@@ -229,7 +213,7 @@ function Write() {
   return (
     <>
      <div className='write_section'>
-     <form onSubmit={e => onSubmit(e)}>
+     <form onSubmit={e => updateblogpost(e)}>
         <div className='dashback_logout'>
         <div style={{display:"flex"}}>
         <ArrowBackIcon style={{color:"#808080"}}/>
@@ -240,7 +224,7 @@ function Write() {
         {!publish?<>
           <button style={{fontWeight:"bold",backgroundColor:'#FF6719',borderRadius:'50px',
         height:'50px',width:'100px',border:'none',color:'white',cursor:'pointer'}} type='submit'>
-         Publish
+         Update
         </button>
         </>:<>
         <button style={{fontWeight:"bold",backgroundColor:'#FF6719',borderRadius:'50px',
@@ -255,7 +239,6 @@ function Write() {
           id="standard-helperText"
           label=""
           defaultValue="Title"
-          placeholder='Title'
           helperText=""
           variant="standard"
           value={title}
@@ -342,8 +325,8 @@ function Write() {
         </div>
         </form>
      </div>
-      {publishalert?<>
-      <Alert onClose={() => {closemsg()}} style={{marginTop:'10px',marginLeft:'200px',marginRight:'200px'}}>Blog Published!</Alert>
+     {publishalert?<>
+      <Alert onClose={() => {closemsg()}} style={{marginTop:'10px',marginLeft:'200px',marginRight:'200px'}}>Blog Updated!</Alert>
       </>:<></>}
      <div style={{textAlign:'center',height:'50px',marginTop:'307px'}}>
       <hr style={{width:'99%'}}></hr>
@@ -351,6 +334,8 @@ function Write() {
     </div>
      </>
   )
+
+
 }
 
-export default Write
+export default UpdateWrite

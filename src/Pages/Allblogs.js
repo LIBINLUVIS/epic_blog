@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import '../Styles/blogs.css'
 import HomeIcon from '@mui/icons-material/Home';
 import EditIcon from '@mui/icons-material/Edit';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PersonIcon from '@mui/icons-material/Person';
 import dumyimg from '../assets/Rectangle 44.png'
-import {Link,NavLink, useParams} from "react-router-dom"
+import {Link,NavLink} from "react-router-dom"
 import bot from "../assets/chatbot.png"
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import SendIcon from '@mui/icons-material/Send';
@@ -15,40 +14,28 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
+function Allblogs() {
+    const [selectbot,setSelectbot]=useState(false)
 
+    const chatbot=()=>{
+      setSelectbot(true);
+    }
+    const closechatbot=()=>{
+      setSelectbot(false)
+    }
 
-function Blogs() {
-  const {id}=useParams()
-  console.log(id)
- 
-  const [selectbot,setSelectbot]=useState(false)
-  const [categoryblog,setCategoryblog]=useState([])
-
-
-  const chatbot=()=>{
-    setSelectbot(true);
-  }
-  const closechatbot=()=>{
-    setSelectbot(false)
-  }
-  console.log(categoryblog)
+  const [blogposts,setBlogPosts]=useState([]) 
   useEffect(()=>{
-    console.log("hello")
-    const catgeoryfetchapi=`http://localhost:5000/api/posts/categoricalfetch/${id}`
-    axios.get(catgeoryfetchapi).then((res)=>{
-      if(res.status==200){
-        console.log(res.data)
-        setCategoryblog(res.data)
-      }
-    })
+     axios.get("http://localhost:5000/api/posts/allPosts").then((res)=>{
+        setBlogPosts(res.data)
+     })
   },[])
-
   return (
-  <div className='main_blogs_container'>
+    <div className='main_blogs_container'>
     <div
      className='blog_sec_sidemenu'>
         <div className='blog_side_icons'>
-            <Link to='/authhome' style={{color:'grey'}}>
+            <Link to="/authhome" style={{color:'grey'}}>
             <HomeIcon id='home_icon_blog' fontSize='large'/>
             </Link>
             <EditIcon id='edit_icon_blog' fontSize='large'/>
@@ -75,38 +62,25 @@ function Blogs() {
     <div className='blog_section'>
     <div className='blogs'>
     <div className='blogs_scroll'>
-     {categoryblog[0]?<>
-      {categoryblog.map((obj)=>(
+    {blogposts.map((obj)=>(
            <div className='blog_box'>
            <div className='ineer_blog_head'>
                 <span>{obj.username}</span>
                 <span>5 days ago</span>
-                <span>
-                  <NavLink to={`/blog/${obj._id}`} style={{color:'grey'}}>
-                  <ArrowForwardIcon/>
-                  </NavLink>
-                </span>
                </div>
                <div style={{fontSize:'20px',fontWeight:'thin',
                marginLeft:'25px',marginTop:'10px'}}>
                <h>{obj.title}</h>
                </div>
                <div className='inner_blog_body'>
-              <img src={dumyimg}/>
-              <p>{obj.description}....</p>
-      
-             {/* <NavLink to={`/blog/${obj._id}`} style={{textDecoration:'none',cursor:'pointer'}}>
-              read more
-              </NavLink> */}
-              
-          
-          </div>
-
-     </div>
+                 <img src={dumyimg}/>
+                 <p>{obj.description}....
+                   <NavLink to={`/blog/${obj._id}`} style={{textDecoration:'none'}}><span style={{color:'#FF6719'}}>read more</span></NavLink>
+                  </p>
+             </div>
+           </div>
     ))}
-     </>:<>
-     <h1 style={{color:'grey'}}>No Posts Yet For this Topic</h1>
-     </>}
+
     </div>
     </div>
 
@@ -163,9 +137,7 @@ function Blogs() {
          <p>© 2022   All rights reserved.</p>
     </div>
    </div> 
-
-   
   )
 }
 
-export default Blogs
+export default Allblogs

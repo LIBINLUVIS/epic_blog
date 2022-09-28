@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import '../Styles/read.css';
 import Button from '@mui/material/Button';
+import axios from 'axios';
 
 
 
 function Read() {
+    let navigate=useNavigate(); 
     const [topics,setTopics]=useState([])
     const [selecttech,setSelecttech]=useState(false)
     const [selectcul,setSelectcul]=useState(false)
@@ -29,6 +31,12 @@ function Read() {
              }))
         param.str(false)
     };
+
+    const fetchtopicpost=()=>{
+       console.log(topics[0])
+       localStorage.setItem("topic",topics[0])
+      
+    }
 
     const topicslist1=[
         {id:1,name:'Technology',select:selecttech,str:setSelecttech},
@@ -62,9 +70,11 @@ function Read() {
         <h>Go back</h>
         </Link>
         </div>
+        <Link to="/allblogs" style={{textDecoration:'none'}}>
         <Button variant="outlined" color="warning">
          Skip
         </Button>
+        </Link>
         </div>
 
         <div style={{display:'flex',justifyContent:'center'}}>
@@ -137,7 +147,9 @@ function Read() {
         </div>
 
         <div className='continue_btn_raed'>
-            <button className='cont_btn'>Continue</button>
+           <Link to={`/blogs/${topics[0]}`}>
+           <button className='cont_btn' >Continue</button>
+           </Link>
         </div>
     </div>
         <div style={{textAlign:'center',height:'80px',bottom:'0px',width:'100%',position:'fixed'}}>

@@ -1,15 +1,16 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import "../Styles/sidemenu.css"
 import "../Styles/homemain.css"
 import AddIcon from '@mui/icons-material/Add';
 import LoginIcon from '@mui/icons-material/Login';
 import banner from "../assets/Frame.png"
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles'; 
 
 
 
 const useStyles=makeStyles((theme)=>({
+
   fotter_hide : {
     [theme.breakpoints.down("md")]: {
       display:'none'
@@ -33,6 +34,13 @@ const useStyles=makeStyles((theme)=>({
 }))
 
 function Home() {
+  const navigate=useNavigate();
+  useEffect(()=>{
+   const auth=localStorage.getItem('user_token')
+   if(auth){
+    navigate('/authhome')
+   }
+  },[])
   const classes=useStyles();
   return (
      

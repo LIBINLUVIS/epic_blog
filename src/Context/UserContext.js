@@ -1,6 +1,7 @@
 import {createContext,useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import { config } from "@fortawesome/fontawesome-svg-core";
 const UserContext = createContext();
 export default UserContext;
 
@@ -12,6 +13,8 @@ export const UserProvider = ({ children }) => {
     const [userlogin,setUserlogin]=useState(false)
     const [loginerror,setLoginerror]=useState(false)
     const [networkerror,setNetworkerror]=useState(false)
+    const [userblogpost,setUserblogpost]=useState([])
+    const [userinfo,setUserinfo]=useState([]) 
     // const [userauth,setUserauth]=useState(false)
 
     let navigate=useNavigate(); 
@@ -96,7 +99,35 @@ export const UserProvider = ({ children }) => {
       navigate("/")
 
     }
+   
+    const userposts=()=>{
+      const userpostapi="http://localhost:5000/api/posts/getUserPosts";
+      const config={
+          headers:{
+            "Content-Type":"application/json",
+            "auth-token":localStorage.getItem('user_token')
+          }
+      }
+      axios.get(userpostapi,config).then((res)=>{
+        setUserblogpost(res.data)
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
 
+  const userinfofetch=()=>{
+    const userinfoapi="http://localhost:5000/api/auth/fetch"
+    const config = {
+      headers: {
+          'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('user_token'),   
+      }
+  };
+    axios.get(userinfoapi,config).then((res)=>{
+      setUserinfo(res.data)
+    })
+  }
 
     let contextData = {
         loginUser:loginUser,
@@ -108,7 +139,11 @@ export const UserProvider = ({ children }) => {
         userlogin:userlogin,
         loginerror:loginerror,
         networkerror:networkerror,
-        logout:logout
+        logout:logout,
+        userposts:userposts,
+        userblogpost:userblogpost,
+        userinfo:userinfo,
+        userinfofetch:userinfofetch
       }; 
     
       return (
