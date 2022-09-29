@@ -11,12 +11,17 @@ import blogimg from '../assets/blog_img1.jpg'
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import {
+  FacebookShareButton,
+} from "react-share";
 
 
 
 function Detailblog() { 
    
     const {id}=useParams();
+    // const shareurl=`http://localhost:3000/blog/${id}`
+    const shareurl="elastic-bhaskara-f253e1.netlify.app"
     const [detailblog,setDetailBlog]=useState([])
     const [comment,setComment]=useState("");
     const [commentstate,setCommentstate]=useState(false)
@@ -83,7 +88,7 @@ function Detailblog() {
       })
     }
     const cancelcomment=()=>{
-      setComment("")
+      setComment("") 
     }
   return ( 
     <>
@@ -119,7 +124,9 @@ function Detailblog() {
         <div className='dblog_icons'>
         {/* <FavoriteBorderTwoToneIcon fontSize='large' style={{color:'grey'}}/> */}
         {/* <ChatBubbleRoundedIcon fontSize='large' style={{color:'grey'}}/> */}
+        <FacebookShareButton url={shareurl} quote={"This is an Blog Post post"} hashtag={"#blog"}>
         <IosShareRoundedIcon fontSize='large' style={{color:'grey'}}/>
+        </FacebookShareButton>
         </div>
     </div>
     <div className='dblog_img'>

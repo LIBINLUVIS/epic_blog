@@ -11,7 +11,7 @@ import Alert from "@mui/material/Alert";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UserContext from "../Context/UserContext";
 import axios from 'axios';
-import { bottomNavigationActionClasses } from '@mui/material';
+import UploadIcon from '@mui/icons-material/Upload';
 
 
 
@@ -23,6 +23,8 @@ function Dashboard() {
   const [open, setOpen] = React.useState(false);
   const [erropen,setErropen]=useState(false);
   const [newusername,setNewusername]=useState('')
+  const [hideuploadbtn,setHideuploadbtn]=useState(false)
+  const [hidecambtn,setHidecambtn]=useState(true)
   
   
   useEffect(()=>{
@@ -30,12 +32,11 @@ function Dashboard() {
     
   },[])
   useEffect(()=>{
-
     userinfofetch();
   },[])
 
   
-
+  console.log(userinfo)
   const [edit,setEdit]=useState(true)
 
   const makeedit=()=>{
@@ -128,7 +129,35 @@ function Dashboard() {
     const updatedname=e.target.value
     setNewusername(updatedname)
   }
-   
+  let fd=new FormData()
+  const uploaduserpic=()=>{
+  document.getElementById("blogimg").click()
+  }
+  const FileSelectHandler = event=>{
+    
+    if(event.target && event.target.files[0]){
+      console.log("pic selected")
+      console.log(event.target.files[0])
+      fd.append('image',event.target.files[0])
+    }
+      // setHidecambtn(false)
+      // setHideuploadbtn(true)
+   }
+   const uploadpic=()=>{
+    const userdpapi="http://localhost:5000/api/auth/changedp"
+      const config={
+        headers:{
+          "Content-Type":"multipart/form-data",
+          "auth-token":localStorage.getItem('user_token')
+        }
+      }
+      axios.put(userdpapi,fd,config).then((res)=>{
+        console.log(res.data)
+        userinfofetch();
+      }).catch((err)=>{
+        console.log(err.data)
+      })
+   }
   return (
     <div className='dashmain'>
         <div className='dashback_logout'>
@@ -149,9 +178,22 @@ function Dashboard() {
       <div className='profile'>
         <div className='pic_username'>
          <div className='profile_pic'>
+          {userinfo?<>
+          <img src={`data:image/jpeg;base64,${userinfo.profilepic}`} style={{width:'100px',height:'100px'}}/>
+          </>:<>
           <img src={pic} style={{width:'100px',height:'100px'}}/>
-          <CameraAltIcon style={{color:'grey',cursor:'pointer'}} type='file'/>
-         </div>
+          </>}
+          {/* {hidecambtn?<> */}
+          <button type="button" onClick={uploaduserpic} style={{backgroundColor:'white',border:'none'}} >
+          <CameraAltIcon style={{color:'grey',cursor:'pointer'}} />
+          </button>
+          {/* </>:<></>} */}
+          <input id="blogimg" type="file" style={{display:'none'}} onChange={FileSelectHandler}/>
+          {/* {hideuploadbtn?<> */}
+          <UploadIcon onClick={uploadpic} style={{color:'grey',cursor:'pointer'}}/>
+          {/* <button  style={{marginBottom:'40px'}}>upload</button> */}
+          {/* </>:<></>} */}
+         </div> 
          <div className='profile_username'>
           <div >
             <h>Username</h>

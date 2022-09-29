@@ -6,6 +6,7 @@ import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import PersonIcon from '@mui/icons-material/Person';
 import dumyimg from '../assets/Rectangle 44.png'
 import {Link,NavLink} from "react-router-dom"
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import bot from "../assets/chatbot.png"
 import CloseIcon from '@mui/icons-material/Close';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
@@ -49,10 +50,10 @@ function Allblogs() {
 
     <div className='blog_head'>
      <h1>Inbox</h1>
-     <div className='text_area1'>
+     {/* <div className='text_area1'>
      <TextField id="standard-basic" label="" variant="standard" style={{marginTop:'9px'}}/>
      <SearchIcon style={{marginTop:'10px',color:'grey',cursor:'pointer'}}/>
-     </div>
+     </div> */}
     </div>
     <>
      <hr style={{width:'99%'}}></hr>
@@ -65,6 +66,11 @@ function Allblogs() {
     {blogposts.map((obj)=>(
            <div className='blog_box'>
            <div className='ineer_blog_head'>
+           <span>
+                  <NavLink to={`/blog/${obj._id}`} style={{color:'grey'}}>
+                  <ArrowForwardIcon/>
+                  </NavLink>
+                </span>
                 <span>{obj.username}</span>
                 <span>5 days ago</span>
                </div>

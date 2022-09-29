@@ -62,10 +62,10 @@ function Blogs() {
 
     <div className='blog_head'>
      <h1>Inbox</h1>
-     <div className='text_area1'>
+     {/* <div className='text_area1'>
      <TextField id="standard-basic" label="" variant="standard" style={{marginTop:'9px'}}/>
      <SearchIcon style={{marginTop:'10px',color:'grey',cursor:'pointer'}}/>
-     </div>
+     </div> */}
     </div>
     <>
      <hr style={{width:'99%'}}></hr>
@@ -79,13 +79,13 @@ function Blogs() {
       {categoryblog.map((obj)=>(
            <div className='blog_box'>
            <div className='ineer_blog_head'>
-                <span>{obj.username}</span>
-                <span>5 days ago</span>
-                <span>
+           <span>
                   <NavLink to={`/blog/${obj._id}`} style={{color:'grey'}}>
                   <ArrowForwardIcon/>
                   </NavLink>
                 </span>
+                <span>{obj.username}</span>
+                <span>5 days ago</span>
                </div>
                <div style={{fontSize:'20px',fontWeight:'thin',
                marginLeft:'25px',marginTop:'10px'}}>

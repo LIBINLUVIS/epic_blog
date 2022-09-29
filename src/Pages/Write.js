@@ -70,6 +70,7 @@ function Write() {
     const [postimg,setPostimg]=useState({
       selectedFile:null
     })
+    
     const [blogpost,setBlogpost]=useState({
       title:"",
       topic:"",
@@ -82,53 +83,41 @@ function Write() {
   //   const fd=new FormData();
   //   fd.append('postimg',postimg.selectedFile);
   //   }
-    var fd=new FormData();
+  
    
     const onSubmit=e=>{
       e.preventDefault(); 
-      fd.append('description',description)
-      axios({
-        method: "post",
-        url: "http://localhost:5000/api/posts/createPost",
-        data: fd,
-        headers: { "Content-Type": "multipart/form-data",
-        "auth-token": localStorage.getItem('user_token') },
-      }).then((res)=>{
+//       const fd=new FormData()
+//       fd.append("description",description)
+//       fd.append("title",title)
+//       fd.append("topic",topicvalue)
+//       fd.append("postimg",postimg)
+//       for (var pair of fd.entries())
+// {
+//  console.log(pair[0]+ ', '+ pair[1]); 
+// }
+//       console.log(description)
+//       console.log(title)
+//       console.log(topicvalue)
+//       console.log(postimg)
+        setPublish(true)
+        const postapi="http://localhost:5000/api/posts/createPost";
+        const config = {
+          headers: {
+             "Content-Type": "application/json" ,
+              "auth-token": localStorage.getItem('user_token'),   
+          }
+      };
+
+      const body=JSON.stringify({"description":description,"title":title,"topic":topicvalue});
+      
+      axios.post(postapi,body,config).then((res)=>{ 
+        setPublish(false)
+        setPublishalert(true)
         console.log(res.data)
       }).catch((err)=>{
         console.log(err.data)
       })
-
-      // fd.append('title',title)
-      // fd.append('description',description)
-      // fd.append('topic',topicvalue)
-      // fd.append('postimg',postimg.selectedFile)
-      // setPublish(true)
-      // // console.log(postimg.selectedFile)
-      // console.log(title)
-      // console.log(topicvalue)
-      // console.log(description)
-      // console.log(fd)
- 
-      //   const postapi="http://localhost:5000/api/posts/createPost";
-      //   const config = {
-      //     headers: {
-      //         'Content-Type': 'multipart/form-data',
-      //         'auth-token': localStorage.getItem('user_token'),   
-      //     }
-      // };
-      // // const body=JSON.stringify({title:title,topic:topicvalue,description:description});
-     
-      // axios.post(postapi,,config).then((res)=>{
-      //   setPublish(false)
-      //   setPublishalert(true)
-      //   console.log(res.data)
-      // }).catch((err)=>{
-      //   console.log("fuckk")
-      //   console.log(err.data)
-      // })
-      
-   
     }
    
 
@@ -177,22 +166,22 @@ function Write() {
       });
       controller.abort();
       
-      //  setBlogwrite(false)
-      //  const spellapi="http://127.0.0.1:8000/api/spellcheck"
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
-      // const body = JSON.stringify({
-      //     spell:e.target.value
-      // });
-      // await axios.post(spellapi,body,config).then((res)=>{
-      //   setResult(res.data)
-      //   setBlogwrite(true)
-      // }).catch((err)=>{
-      //   console.log(err)
-      // })
+       setBlogwrite(false)
+       const spellapi="http://127.0.0.1:8000/api/spellcheck"
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const body = JSON.stringify({
+          spell:e.target.value
+      });
+      await axios.post(spellapi,body,config).then((res)=>{
+        setResult(res.data)
+        setBlogwrite(true)
+      }).catch((err)=>{
+        console.log(err)
+      })
     }
     const handleClose = (event, reason) => {
       if (reason === 'clickaway') {
@@ -207,16 +196,9 @@ function Write() {
    const FileSelectHandler = event=>{
 
     if(event.target && event.target.files[0]){
-      console.log("pic")
-      
-      fd.append('postimg',event.target.files[0])
-      console.log(fd.postimg)
-    }
-    
-    // setPostimg({
-    //   selectedFile:event.target.files[0]
-    // })
-    
+      console.log(event.target.files[0])
+      setPostimg(event.target.files[0])
+    }       
    }
    const closemsg=()=>{
       setPublishalert(false)
