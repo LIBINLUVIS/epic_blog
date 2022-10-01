@@ -81,7 +81,7 @@ function Write() {
   //   fd.append('postimg',postimg.selectedFile);
   //   }
 
-  const onSubmit = (e) => {
+  const onSubmit =(e) => {
     e.preventDefault();
     //       const fd=new FormData()
     //       fd.append("description",description)
@@ -97,6 +97,17 @@ function Write() {
     //       console.log(topicvalue)
     //       console.log(postimg)
     setPublish(true);
+
+    // const response = await fetch("http://localhost:5000/api/posts/createPost",{
+    //   method:"POST",
+    //   headers:{
+    //     "auth-token":localStorage.getItem('user_token')
+    //   },
+    //   body:fd
+    // })
+
+    // const res = await response.json();
+    // console.log(res);
     const postapi = "http://localhost:5000/api/posts/createPost";
     const config = {
       headers: {

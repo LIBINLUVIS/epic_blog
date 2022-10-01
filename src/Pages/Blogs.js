@@ -17,10 +17,27 @@ import axios from "axios";
 
 function Blogs() {
   const { id } = useParams();
-  console.log(id);
+  console.log(id)
 
   const [selectbot, setSelectbot] = useState(false);
   const [categoryblog, setCategoryblog] = useState([]);
+  const [date, setdate] = useState('')
+  const [rerender, setrerender] = useState(0)
+
+
+  useEffect(() => {
+    setdate(new Date(categoryblog.timestamp).toLocaleString("en-IN", { timeZone: 'Asia/Kolkata' }))
+    setTimeout(() => {
+      if(rerender==0){
+        setrerender(1)
+        console.log("rerender")
+        console.log(date)
+      }
+    }, 1500)
+    
+    // eslint-disable-next-line
+}, [rerender])
+
 
   const chatbot = () => {
     setSelectbot(true);
@@ -94,7 +111,7 @@ function Blogs() {
                         </NavLink>
                       </span>
                       <span>{obj.username}</span>
-                      <span>5 days ago</span>
+                      <span>{obj.timestamp}</span>
                     </div>
                     <div
                       style={{
