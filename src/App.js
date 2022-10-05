@@ -31,15 +31,15 @@ function App() {
          <Route element={<Authhome/>} path="/authhome"/>
          <Route element={<Dashboard/>} path="/dashboard"/>
          <Route element={<Write/>} path="/write" />
-         <Route element={<Read/>} path="/Read" />
-         <Route element={<Blogs/>} path="/blogs/:id" exact/>
          <Route element={<Detailblog/>} path="/blog/:id" exact/>
          <Route element={<UpdateWrite/>} path="/updatepost/:id" exact/>
-         <Route element={<Allblogs/>} path="/allblogs"/>
          </Route>
          <Route element={<Home/>} path="/" exact/>
+         <Route element={<Allblogs/>} path="/allblogs"/>
+         <Route element={<Blogs/>} path="/blogs/:id" exact/>
          <Route element={<Login/>} path="/signin" />
          <Route  element={<Signup/>} path="/signup"/>  
+         <Route element={<Read/>} path="/Read" />
          <Route element={<Signup1/>} path="/signup1"/>
          </Routes>
         </UserProvider> 
