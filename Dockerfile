@@ -14,7 +14,8 @@
 FROM node as build
 
 WORKDIR /blog
-COPY package*.json .
+COPY package.json ./
+COPY package-lock.json ./
 RUN npm i --force
 COPY . .
 RUN npm run build
