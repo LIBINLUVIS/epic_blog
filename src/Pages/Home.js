@@ -87,7 +87,7 @@ function Home() {
             awesome place to make oneself
           </span>
           <br></br>
-          productive and entertained through daily updates
+          productive and entertained through daily updates.
         </p>
 
         <div className="background">
