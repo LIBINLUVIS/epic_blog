@@ -1,16 +1,3 @@
-# FROM node:15.13-alpine
-# WORKDIR /blog
-# ENV PATH="./node_modules/.bin:$PATH"
-# COPY . .
-# RUN npm run build
-# CMD ["npm","start"]
-# FROM node:alpine
-# WORKDIR /blog
-# COPY package.json ./
-# COPY package-lock.json ./
-# COPY ./ ./
-# RUN npm i --force
-# CMD ["npm", "run", "start"]
 FROM node as build
 
 WORKDIR /blog
