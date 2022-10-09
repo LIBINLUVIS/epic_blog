@@ -171,7 +171,7 @@ function Write() {
     const controller = new AbortController();
 
     await axios
-      .get(`http://127.0.0.1:8000/api/spellcheck/${word}/`, {
+      .get(`https://spellcheckapis-production.up.railway.app/api/spellcheck/${word}/`, {
         signal: controller.signal,
       })
       .then((res) => {
