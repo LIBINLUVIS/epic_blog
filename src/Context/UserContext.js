@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
 
     let loginUser=async (e)=>{
         setUserlogin(true)
-        const loginapi="http://localhost:5000/api/auth/login"
+        const loginapi="http://20.1.218.186/api/auth/login"
         e.preventDefault();
         let username = e.target.username.value;
         let password = e.target.password.value;
@@ -75,7 +75,7 @@ export const UserProvider = ({ children }) => {
          username:username,
          password:password
        });
-       const signupapi="http://localhost:5000/api/auth/signup";
+       const signupapi="http://20.1.218.186/api/auth/signup";
 
        axios.post(signupapi,body,config).then((res)=>{
         console.log("User Created!");
