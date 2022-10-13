@@ -10,7 +10,7 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 import Autocomplete from "@mui/material/Autocomplete";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import axios from "axios";
+import axios from "../Axios.js";
 import CloseIcon from "@mui/icons-material/Close";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import copy from "copy-to-clipboard";
@@ -76,7 +76,7 @@ function UpdateWrite() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/posts/fetchonepost/${id}`)
+      .get(`api/posts/fetchonepost/${id}`)
       .then((res) => {
         setBlogpost({
           title: res.data.title,
@@ -97,7 +97,7 @@ function UpdateWrite() {
     console.log(topic);
     console.log(description);
     if (localStorage.getItem("user_token")) {
-      const updateapi = `http://localhost:5000/api/posts/updatePost/${id}`;
+      const updateapi = `api/posts/updatePost/${id}`;
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -161,7 +161,7 @@ function UpdateWrite() {
     const controller = new AbortController();
 
     await axios
-      .get(`http://127.0.0.1:8000/api/spellcheck/${word}/`, {
+      .get(`api/spellcheck/${word}/`, {
         signal: controller.signal,
       })
       .then((res) => {

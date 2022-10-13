@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "../Styles/read.css";
 import Button from "@mui/material/Button";
-import axios from "axios";
+import axios from "../Axios.js";
 
 function Read() {
   let navigate = useNavigate();

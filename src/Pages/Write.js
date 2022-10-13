@@ -9,7 +9,7 @@ import Alert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import axios from "axios";
+import axios from "../Axios.js";
 import CloseIcon from "@mui/icons-material/Close";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import copy from "copy-to-clipboard";
@@ -108,7 +108,7 @@ function Write() {
 
     // const res = await response.json();
     // console.log(res);
-    const postapi = "http://localhost:5000/api/posts/createPost";
+    const postapi = "api/posts/createPost";
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -182,7 +182,7 @@ function Write() {
     controller.abort();
 
     setBlogwrite(false);
-    const spellapi = "http://127.0.0.1:8000/api/spellcheck";
+    const spellapi = "api/spellcheck";
     const config = {
       headers: {
         "Content-Type": "application/json",

@@ -12,32 +12,43 @@ import CloseIcon from "@mui/icons-material/Close";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import axios from "../Axios.js";
 
 function Blogs() {
   const { id } = useParams();
-  console.log(id)
+  console.log(id);
 
   const [selectbot, setSelectbot] = useState(false);
   const [categoryblog, setCategoryblog] = useState([]);
-  const [date, setdate] = useState('')
-  const [rerender, setrerender] = useState(0)
-
+  const [categoryblogfetched, setCategoryblogfetched] = useState(false);
+  const [date, setdate] = useState("");
+  const [rerender, setrerender] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const handleclose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   useEffect(() => {
-    setdate(new Date(categoryblog.timestamp).toLocaleString("en-IN", { timeZone: 'Asia/Kolkata' }))
+    setdate(
+      new Date(categoryblog.timestamp).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+      })
+    );
     setTimeout(() => {
-      if(rerender==0){
-        setrerender(1)
-        console.log("rerender")
-        console.log(date)
+      if (rerender == 0) {
+        setrerender(1);
+        console.log("rerender");
+        console.log(date);
       }
-    }, 1500)
-    
-    // eslint-disable-next-line
-}, [rerender])
+    }, 1500);
 
+    // eslint-disable-next-line
+  }, [rerender]);
 
   const chatbot = () => {
     setSelectbot(true);
@@ -48,11 +59,14 @@ function Blogs() {
   console.log(categoryblog);
   useEffect(() => {
     console.log("hello");
-    const catgeoryfetchapi = `http://localhost:5000/api/posts/categoricalfetch/${id}`;
+    handleToggle();
+    const catgeoryfetchapi = `api/posts/categoricalfetch/${id}`;
     axios.get(catgeoryfetchapi).then((res) => {
       if (res.status == 200) {
         console.log(res.data);
         setCategoryblog(res.data);
+        handleclose();
+        setCategoryblogfetched(true)
       }
     });
   }, []);
@@ -97,46 +111,65 @@ function Blogs() {
       <div className="blog_section">
         <div className="blogs">
           <div className="blogs_scroll">
-            {categoryblog[0] ? (
+            {categoryblogfetched ? (
               <>
-                {categoryblog.map((obj) => (
-                  <div className="blog_box">
-                    <div className="ineer_blog_head">
-                      <span>
-                        <NavLink
-                          to={`/blog/${obj._id}`}
-                          style={{ color: "grey" }}
+                {categoryblog[0] ? (
+                  <>
+                    {categoryblog.map((obj) => (
+                      <div className="blog_box">
+                        <div className="ineer_blog_head">
+                          <span>
+                            <NavLink
+                              to={`/blog/${obj._id}`}
+                              style={{ color: "grey" }}
+                            >
+                              <ArrowForwardIcon />
+                            </NavLink>
+                          </span>
+                          <span>{obj.username}</span>
+                          <span>{obj.timestamp}</span>
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "20px",
+                            fontWeight: "thin",
+                            marginLeft: "25px",
+                            marginTop: "10px",
+                          }}
                         >
-                          <ArrowForwardIcon />
-                        </NavLink>
-                      </span>
-                      <span>{obj.username}</span>
-                      <span>{obj.timestamp}</span>
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "thin",
-                        marginLeft: "25px",
-                        marginTop: "10px",
-                      }}
-                    >
-                      <h>{obj.title}</h>
-                    </div>
-                    <div className="inner_blog_body">
-                      <img src={dumyimg} />
-                      <p>{obj.description}....</p>
+                          <h>{obj.title}</h>
+                        </div>
+                        <div className="inner_blog_body">
+                          <img src={dumyimg} />
+                          <p>{obj.description}....</p>
 
-                      {/* <NavLink to={`/blog/${obj._id}`} style={{textDecoration:'none',cursor:'pointer'}}>
+                          {/* <NavLink to={`/blog/${obj._id}`} style={{textDecoration:'none',cursor:'pointer'}}>
               read more
               </NavLink> */}
-                    </div>
-                  </div>
-                ))}
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <h1 style={{ color: "grey" }}>
+                      No Posts Yet For this Topic
+                    </h1>
+                  </>
+                )}
               </>
             ) : (
               <>
-                <h1 style={{ color: "grey" }}>No Posts Yet For this Topic</h1>
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={open}
+                  onClick={handleclose}
+                >
+                  <CircularProgress color="inherit"/>
+                </Backdrop>
               </>
             )}
           </div>

@@ -1,21 +1,28 @@
 import React, { useState, useContext, useEffect } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { Link, NavLink } from "react-router-dom";
 import "../Styles/dashboard.css";
 import pic from "../assets/Ellipse 4.png";
 import TextField from "@mui/material/TextField";
+import Skeleton from '@mui/material/Skeleton';
 import EditIcon from "@mui/icons-material/Edit";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import UserContext from "../Context/UserContext";
-import axios from "axios";
+import axios from "../Axios.js";
 import UploadIcon from "@mui/icons-material/Upload";
 
+
+
+
+
 function Dashboard() {
-  let { logout, userposts, userblogpost, userinfofetch, userinfo } =
+  let { logout, userposts, userblogpost, userinfofetch, userinfo,blogfetched } =
     useContext(UserContext);
+  
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [namesave, setNamesave] = useState(false);
@@ -42,7 +49,7 @@ function Dashboard() {
   const changeusername = () => {
     setEdit(true);
     setNamesave(true);
-    const namechangeapi = "http://localhost:5000/api/auth/changeusername";
+    const namechangeapi = "api/auth/changeusername";
     const body = JSON.stringify({ username: newusername });
     const config = {
       headers: {
@@ -66,7 +73,7 @@ function Dashboard() {
   };
   const deletepost = (id) => {
     console.log(id);
-    const deleteapi = `http://localhost:5000/api/posts/deletePost/${id}`;
+    const deleteapi = `api/posts/deletePost/${id}`;
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +90,7 @@ function Dashboard() {
     e.preventDefault();
     const pass1 = password1;
     const pass2 = password2;
-    const UpdatePassapi = "http://localhost:5000/api/auth/changepw";
+    const UpdatePassapi = "api/auth/changepw";
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +150,7 @@ function Dashboard() {
     // setHideuploadbtn(true)
   };
   const uploadpic = () => {
-    const userdpapi = "http://localhost:5000/api/auth/changedp";
+    const userdpapi = "api/auth/changedp";
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -187,38 +194,55 @@ function Dashboard() {
           <div className="profile_pic">
             {userinfo ? (
               <>
-                <img
-                  src={`data:image/jpeg;base64,${userinfo.profilepic}`}
-                  style={{ width: "100px", height: "100px" }}
-                />
+                {userinfo.profilepic ? (
+                  <>
+                    <img
+                      src={`data:image/jpeg;base64,${userinfo.profilepic}`}
+                      style={{ width: "100px", height: "100px" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={pic}
+                      style={{ width: "100px", height: "100px" }}
+                    />
+                  </>
+                )}
               </>
             ) : (
               <>
-                <img src={pic} style={{ width: "100px", height: "100px" }} />
+                <CircularProgress
+                  style={{
+                    height: "30px",
+                    width: "30px",
+                    marginTop: "30px",
+                    color: "grey",
+                  }}
+                />
               </>
             )}
-            {/* {hidecambtn?<> */}
+           
+           
             <button
               type="button"
               onClick={uploaduserpic}
               style={{ backgroundColor: "white", border: "none" }}
             >
-              <CameraAltIcon style={{ color: "grey", cursor: "pointer" }} />
+              <CameraAltIcon style={{ color: "grey", cursor: "pointer" }} className='camicon'/>             
             </button>
-            {/* </>:<></>} */}
             <input
               id="blogimg"
               type="file"
               style={{ display: "none" }}
               onChange={FileSelectHandler}
             />
-            {/* {hideuploadbtn?<> */}
+    
             <UploadIcon
               onClick={uploadpic}
               style={{ color: "grey", cursor: "pointer" }}
             />
-            {/* <button  style={{marginBottom:'40px'}}>upload</button> */}
-            {/* </>:<></>} */}
+
           </div>
           <div className="profile_username">
             <div>
@@ -361,14 +385,18 @@ function Dashboard() {
       </div>
 
       <div className="user_posts_head">
-        <h1>Posts</h1>
-        {userblogpost[0] ? (
+        <h1>Posts</h1> 
+        {blogfetched?<>
+          {userblogpost[0] ? (
           <>
             <div className="user_posts">
               {userblogpost.map((obj) => (
                 <div className="user_post">
                   <div className="post_head">
                     <h>{obj.title}</h>
+                    <NavLink to={`/blog/${obj._id}`} style={{ color: "grey" }}>
+                      <ArrowForwardIcon />
+                    </NavLink>
                   </div>
                   <div className="post_content">
                     <span style={{ color: "#808080" }}>jan 8 at 8:10 pm</span>
@@ -412,10 +440,17 @@ function Dashboard() {
                 alignItems: "center",
               }}
             >
-              <CircularProgress style={{ color: "grey" }} />
+              <h1 style={{color:'grey'}}>No Posts Yet by the user</h1>
             </div>
           </>
         )}
+        </>:<>
+  
+        <Skeleton variant="rectangular" width={300} height={250}/>
+        <Skeleton variant="rectangular" width={300} height={250} style={{margin:'20px'}}/>
+        <Skeleton variant="rectangular" width={300} height={250}/>
+      
+        </>}
       </div>
 
       <div

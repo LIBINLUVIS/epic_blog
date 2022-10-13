@@ -12,11 +12,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import axios from "../Axios.js";
 
 function Allblogs() {
   const [selectbot, setSelectbot] = useState(false);
+  const [blogpostsfetch, setBlogpostsfetch] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleclose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   const chatbot = () => {
     setSelectbot(true);
@@ -27,8 +36,13 @@ function Allblogs() {
 
   const [blogposts, setBlogPosts] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/api/posts/allPosts").then((res) => {
-      setBlogPosts(res.data);
+    handleToggle();
+    axios.get("api/posts/allPosts").then((res) => {
+      if (res.status == 200) {
+        setBlogPosts(res.data);
+        setBlogpostsfetch(true)
+        handleclose();
+      }
     });
   }, []);
   return (
@@ -71,41 +85,69 @@ function Allblogs() {
       <div className="blog_section">
         <div className="blogs">
           <div className="blogs_scroll">
-            {blogposts.map((obj) => (
-              <div className="blog_box">
-                <div className="ineer_blog_head">
-                  <span>
-                    <NavLink to={`/blog/${obj._id}`} style={{ color: "grey" }}>
-                      <ArrowForwardIcon />
-                    </NavLink>
-                  </span>
-                  <span>{obj.username}</span>
-                  <span>5 days ago</span>
-                </div>
-                <div
-                  style={{
-                    fontSize: "20px",
-                    fontWeight: "thin",
-                    marginLeft: "25px",
-                    marginTop: "10px",
+            {blogpostsfetch ? (
+              <>
+                {blogposts[0] ? (
+                  <>
+                    {blogposts.map((obj) => (
+                      <div className="blog_box">
+                        <div className="ineer_blog_head">
+                          <span>
+                            <NavLink
+                              to={`/blog/${obj._id}`}
+                              style={{ color: "grey" }}
+                            >
+                              <ArrowForwardIcon />
+                            </NavLink>
+                          </span>
+                          <span>{obj.username}</span>
+                          <span>5 days ago</span>
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "20px",
+                            fontWeight: "thin",
+                            marginLeft: "25px",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <h>{obj.title}</h>
+                        </div>
+                        <div className="inner_blog_body">
+                          <img src={dumyimg} />
+                          <p>
+                            {obj.description}....
+                            <NavLink
+                              to={`/blog/${obj._id}`}
+                              style={{ textDecoration: "none" }}
+                            >
+                              <span style={{ color: "#FF6719" }}>
+                                read more
+                              </span>
+                            </NavLink>
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>No Posts are Yet</>
+                )}
+              </>
+            ) : (
+              <>
+                <Backdrop
+                  sx={{
+                    color: "#fff",
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
                   }}
+                  open={open}
+                  onClick={handleclose}
                 >
-                  <h>{obj.title}</h>
-                </div>
-                <div className="inner_blog_body">
-                  <img src={dumyimg} />
-                  <p>
-                    {obj.description}....
-                    <NavLink
-                      to={`/blog/${obj._id}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <span style={{ color: "#FF6719" }}>read more</span>
-                    </NavLink>
-                  </p>
-                </div>
-              </div>
-            ))}
+                  <CircularProgress color="inherit" />
+                </Backdrop>
+              </>
+            )}
           </div>
         </div>
 

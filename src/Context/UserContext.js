@@ -1,13 +1,13 @@
 import {createContext,useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import { config } from "@fortawesome/fontawesome-svg-core";
+import axios from "../Axios.js";
 const UserContext = createContext();
 export default UserContext;
 
 
 export const UserProvider = ({ children }) => {
     const [useralredyin,setUseralredyin]=useState(false);
+    const [blogfetched,setBlogfetched]=useState(false)
     const [usertoken,setUsertoken]=useState(false)
     const [usersignup,setUsersignup]=useState(false)
     const [userlogin,setUserlogin]=useState(false)
@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
 
     let loginUser=async (e)=>{
         setUserlogin(true)
-        const loginapi="http://20.1.218.186/api/auth/login"
+        const loginapi="api/auth/login"
         e.preventDefault();
         let username = e.target.username.value;
         let password = e.target.password.value;
@@ -75,7 +75,7 @@ export const UserProvider = ({ children }) => {
          username:username,
          password:password
        });
-       const signupapi="http://20.1.218.186/api/auth/signup";
+       const signupapi="api/auth/signup";
 
        axios.post(signupapi,body,config).then((res)=>{
         console.log("User Created!");
@@ -101,7 +101,7 @@ export const UserProvider = ({ children }) => {
     }
    
     const userposts=()=>{
-      const userpostapi="http://localhost:5000/api/posts/getUserPosts";
+      const userpostapi="api/posts/getUserPosts";
       const config={
           headers:{
             "Content-Type":"application/json",
@@ -110,6 +110,7 @@ export const UserProvider = ({ children }) => {
       }
       axios.get(userpostapi,config).then((res)=>{
         setUserblogpost(res.data)
+        setBlogfetched(true) 
         console.log(res.data)
       }).catch((err)=>{
         console.log(err)
@@ -117,7 +118,7 @@ export const UserProvider = ({ children }) => {
     }
 
   const userinfofetch=()=>{
-    const userinfoapi="http://localhost:5000/api/auth/fetch"
+    const userinfoapi="api/auth/fetch"
     const config = {
       headers: {
           'Content-Type': 'application/json',
@@ -143,7 +144,8 @@ export const UserProvider = ({ children }) => {
         userposts:userposts,
         userblogpost:userblogpost,
         userinfo:userinfo,
-        userinfofetch:userinfofetch
+        userinfofetch:userinfofetch,
+        blogfetched:blogfetched
       }; 
     
       return (
