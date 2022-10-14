@@ -13,6 +13,19 @@
     
    
 }
+.profile_pic{
+    display: flex;
+  
+}
+.profileuploadico{
+    color:grey;
+     cursor:pointer;
+    margin-top: 90px;
+}
+.profilepicico{
+    color: grey;
+    cursor: pointer;
+}
 .profile_username{
     display: flex;
     flex-direction: column;
@@ -92,6 +105,9 @@
    .user_post{
     width: 598px;
    }
+   .profilepicico{
+     margin-top: 90px;
+    } 
   
 
 }

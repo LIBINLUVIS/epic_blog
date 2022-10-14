@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import "../Styles/dashboard.css";
 import pic from "../assets/Ellipse 4.png";
 import TextField from "@mui/material/TextField";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import EditIcon from "@mui/icons-material/Edit";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,22 +15,23 @@ import UserContext from "../Context/UserContext";
 import axios from "../Axios.js";
 import UploadIcon from "@mui/icons-material/Upload";
 
-
-
-
-
 function Dashboard() {
-  let { logout, userposts, userblogpost, userinfofetch, userinfo,blogfetched } =
-    useContext(UserContext);
-  
+  let {
+    logout,
+    userposts,
+    userblogpost,
+    userinfofetch,
+    userinfo,
+    blogfetched,
+  } = useContext(UserContext);
+
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [namesave, setNamesave] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [erropen, setErropen] = useState(false);
   const [newusername, setNewusername] = useState("");
-  const [hideuploadbtn, setHideuploadbtn] = useState(false);
-  const [hidecambtn, setHidecambtn] = useState(true);
+  const [uploadprogress,setUploadprogress]=useState(0);
 
   useEffect(() => {
     userposts();
@@ -156,9 +157,13 @@ function Dashboard() {
         "Content-Type": "multipart/form-data",
         "auth-token": localStorage.getItem("user_token"),
       },
+      onUploadProgress:(data)=>{
+        let progress=Math.round((data.loaded/data.total)*100)
+        setUploadprogress(progress>=100 ? 0:progress)
+      }, 
     };
     axios
-      .put(userdpapi, fd, config)
+      .put(userdpapi,fd,config)
       .then((res) => {
         console.log(res.data);
         userinfofetch();
@@ -195,12 +200,18 @@ function Dashboard() {
             {userinfo ? (
               <>
                 {userinfo.profilepic ? (
-                  <>
+                  <div style={{ position: "relative" }}>
                     <img
                       src={`data:image/jpeg;base64,${userinfo.profilepic}`}
-                      style={{ width: "100px", height: "100px" }}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        display: "block",
+                      }}
                     />
-                  </>
+                    <CircularProgress variant="determinate" value={uploadprogress} style={{position:'absolute',bottom:'35px',left:'30px'}}/>
+                    
+                  </div>
                 ) : (
                   <>
                     <img
@@ -222,14 +233,13 @@ function Dashboard() {
                 />
               </>
             )}
-           
-           
+
             <button
               type="button"
               onClick={uploaduserpic}
               style={{ backgroundColor: "white", border: "none" }}
             >
-              <CameraAltIcon style={{ color: "grey", cursor: "pointer" }} className='camicon'/>             
+              <CameraAltIcon className="profilepicico" />
             </button>
             <input
               id="blogimg"
@@ -237,12 +247,8 @@ function Dashboard() {
               style={{ display: "none" }}
               onChange={FileSelectHandler}
             />
-    
-            <UploadIcon
-              onClick={uploadpic}
-              style={{ color: "grey", cursor: "pointer" }}
-            />
 
+            <UploadIcon onClick={uploadpic} className="profileuploadico" />
           </div>
           <div className="profile_username">
             <div>
@@ -385,72 +391,84 @@ function Dashboard() {
       </div>
 
       <div className="user_posts_head">
-        <h1>Posts</h1> 
-        {blogfetched?<>
-          {userblogpost[0] ? (
+        <h1>Posts</h1>
+        {blogfetched ? (
           <>
-            <div className="user_posts">
-              {userblogpost.map((obj) => (
-                <div className="user_post">
-                  <div className="post_head">
-                    <h>{obj.title}</h>
-                    <NavLink to={`/blog/${obj._id}`} style={{ color: "grey" }}>
-                      <ArrowForwardIcon />
-                    </NavLink>
-                  </div>
-                  <div className="post_content">
-                    <span style={{ color: "#808080" }}>jan 8 at 8:10 pm</span>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      {/* <FavoriteBorderOutlinedIcon style={{color:'#808080'}}/><span>100</span> */}
-                    </div>
-                    {/* <CommentIcon style={{cursor:'pointer',color:'#808080'}}/> */}
+            {userblogpost[0] ? (
+              <>
+                <div className="user_posts">
+                  {userblogpost.map((obj) => (
+                    <div className="user_post">
+                      <div className="post_head">
+                        <h>{obj.title}</h>
+                        <NavLink
+                          to={`/blog/${obj._id}`}
+                          style={{ color: "grey" }}
+                        >
+                          <ArrowForwardIcon />
+                        </NavLink>
+                      </div>
+                      <div className="post_content">
+                        <span style={{ color: "#808080" }}>
+                          jan 8 at 8:10 pm
+                        </span>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          {/* <FavoriteBorderOutlinedIcon style={{color:'#808080'}}/><span>100</span> */}
+                        </div>
+                        {/* <CommentIcon style={{cursor:'pointer',color:'#808080'}}/> */}
 
-                    <DeleteIcon
-                      style={{ color: "#808080", cursor: "pointer" }}
-                      onClick={(e) => deletepost(obj._id)}
-                    />
-                    <Link to={`/updatepost/${obj._id}`}>
-                      <EditIcon
-                        style={{ color: "#808080", cursor: "pointer" }}
-                      />
-                    </Link>
-                  </div>
-                  <div className="post_view">
-                    <h
-                      style={{
-                        marginLeft: "40px",
-                        fontSize: "40px",
-                        color: "grey",
-                      }}
-                    >
-                      2
-                    </h>
-                    <h style={{ color: "grey" }}>TOTAL VIEWS</h>
-                  </div>
+                        <DeleteIcon
+                          style={{ color: "#808080", cursor: "pointer" }}
+                          onClick={(e) => deletepost(obj._id)}
+                        />
+                        <Link to={`/updatepost/${obj._id}`}>
+                          <EditIcon
+                            style={{ color: "#808080", cursor: "pointer" }}
+                          />
+                        </Link>
+                      </div>
+                      <div className="post_view">
+                        <h
+                          style={{
+                            marginLeft: "40px",
+                            fontSize: "40px",
+                            color: "grey",
+                          }}
+                        >
+                          2
+                        </h>
+                        <h style={{ color: "grey" }}>TOTAL VIEWS</h>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 style={{ color: "grey" }}>No Posts Yet by the user</h1>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <h1 style={{color:'grey'}}>No Posts Yet by the user</h1>
-            </div>
+            <Skeleton variant="rectangular" width={300} height={250} />
+            <Skeleton
+              variant="rectangular"
+              width={300}
+              height={250}
+              style={{ margin: "20px" }}
+            />
+            <Skeleton variant="rectangular" width={300} height={250} />
           </>
         )}
-        </>:<>
-  
-        <Skeleton variant="rectangular" width={300} height={250}/>
-        <Skeleton variant="rectangular" width={300} height={250} style={{margin:'20px'}}/>
-        <Skeleton variant="rectangular" width={300} height={250}/>
-      
-        </>}
       </div>
 
       <div
