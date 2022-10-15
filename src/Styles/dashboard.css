@@ -85,6 +85,18 @@
    
 }
 
+.profilepicloader-box{
+    bottom: 120px;
+    position:absolute;
+    left: 30px;
+}
+.picuploadprogress-box{
+    bottom: 120px;
+    position:absolute;
+    left: 30px;
+}
+
+
 
 @media only screen and (max-width: 900px){
    .profile{
@@ -92,6 +104,15 @@
     flex-direction: column;
     align-items: center;
    }
+   .profilepicloader-box{
+    bottom: 45px;
+   
+}
+.picuploadprogress-box{
+    bottom: 60px;
+    
+}
+
    .change_password{
     display: flex;
     flex-direction: column;

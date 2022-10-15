@@ -15,7 +15,8 @@ export const UserProvider = ({ children }) => {
     const [networkerror,setNetworkerror]=useState(false)
     const [userblogpost,setUserblogpost]=useState([])
     const [userinfo,setUserinfo]=useState([]) 
-    // const [userauth,setUserauth]=useState(false)
+    const [fetchdp,setFetchdp]=useState(false)
+  
 
     let navigate=useNavigate(); 
 
@@ -118,6 +119,7 @@ export const UserProvider = ({ children }) => {
     }
 
   const userinfofetch=()=>{
+    setFetchdp(true)
     const userinfoapi="api/auth/fetch"
     const config = {
       headers: {
@@ -126,7 +128,10 @@ export const UserProvider = ({ children }) => {
       }
   };
     axios.get(userinfoapi,config).then((res)=>{
-      setUserinfo(res.data)
+      if(res.status==200){
+        setUserinfo(res.data)
+        setFetchdp(false)
+      }
     })
   }
 
@@ -145,7 +150,10 @@ export const UserProvider = ({ children }) => {
         userblogpost:userblogpost,
         userinfo:userinfo,
         userinfofetch:userinfofetch,
-        blogfetched:blogfetched
+        blogfetched:blogfetched,
+        setFetchdp:setFetchdp,
+        fetchdp:fetchdp
+
       }; 
     
       return (

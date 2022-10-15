@@ -23,6 +23,8 @@ function Dashboard() {
     userinfofetch,
     userinfo,
     blogfetched,
+    setFetchdp,
+    fetchdp
   } = useContext(UserContext);
 
   const [password1, setPassword1] = useState("");
@@ -165,8 +167,11 @@ function Dashboard() {
     axios
       .put(userdpapi,fd,config)
       .then((res) => {
-        console.log(res.data);
-        userinfofetch();
+        if(res.status==200){
+          userinfofetch();
+        }
+        
+        
       })
       .catch((err) => {
         console.log(err.data);
@@ -209,16 +214,22 @@ function Dashboard() {
                         display: "block",
                       }}
                     />
-                    <CircularProgress variant="determinate" value={uploadprogress} style={{position:'absolute',bottom:'35px',left:'30px'}}/>
-                    
+                    {fetchdp?<div className="profilepicloader-box">
+                    <CircularProgress  className="profilepicloader" style={{color:'green'}}/>
+                    </div>:<div className="picuploadprogress-box">
+                    <CircularProgress variant="determinate" value={uploadprogress} className="picuploadprogress" />
+                    </div>}  
                   </div>
                 ) : (
-                  <>
-                    <img
+                  <div style={{ position: "relative" }}>
+                     <img
                       src={pic}
                       style={{ width: "100px", height: "100px" }}
                     />
-                  </>
+                   <div className="profilepicloader-box">
+                    <CircularProgress  className="profilepicloader" style={{color:'green'}}/>
+                    </div>
+                  </div>
                 )}
               </>
             ) : (
@@ -255,21 +266,21 @@ function Dashboard() {
               <h>Username</h>
             </div>
             <div style={{ display: "flex" }}>
-              {userinfo ? (
+              {!fetchdp ? (
                 <>
                   <TextField
                     id="standard-read-only-input"
                     label=""
-                    defaultValue={userinfo.username}
+                    value={userinfo.username}
                     InputProps={{
-                      readOnly: edit,
+                      readOnly: false,
                     }}
                     variant="standard"
                     onChange={getupdatedval}
                   />
                 </>
               ) : (
-                <></>
+                <><CircularProgress  style={{color:'blue',height:'30px',width:'30px',marginTop:'45px',margin:'5px'}}/></>
               )}
 
               <EditIcon
