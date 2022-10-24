@@ -15,7 +15,6 @@ import axios from "../Axios.js";
 import Backdrop from "@mui/material/Backdrop";
 import { FacebookShareButton } from "react-share";
 
-
 /**
  * Detailblog post info
  * @type {string}
@@ -26,7 +25,7 @@ function Detailblog() {
   // const shareurl=`http://localhost:3000/blog/${id}`
   const shareurl = `20.85.110.20/blog/${id}`;
   const [detailblog, setDetailBlog] = useState([]);
-  const [commentfetch,setCommentfetch]=useState(false)
+  const [commentfetch, setCommentfetch] = useState(false);
   const [comment, setComment] = useState("");
   const [commentstate, setCommentstate] = useState(false);
   const [blogcomment, setBlogcomment] = useState([]);
@@ -46,7 +45,7 @@ function Detailblog() {
       if (res.status == 200) {
         setDetailBlog(res.data);
         handleclose();
-        setDetailblogfetch(true)
+        setDetailblogfetch(true);
       }
     });
   }, []);
@@ -59,9 +58,9 @@ function Detailblog() {
       },
     };
     axios.get(getcommentapi, config).then((res) => {
-      if(res.status==200){
+      if (res.status == 200) {
         setBlogcomment(res.data);
-        setCommentfetch(true)
+        setCommentfetch(true);
       }
     });
   }, []);
@@ -74,7 +73,7 @@ function Detailblog() {
     setSelectbot(false);
   };
   const makecomment = () => {
-    setCommentfetch(false)
+    setCommentfetch(false);
     const commentapi = `api/comments/postComment/${id}`;
     const body = JSON.stringify({ comment: comment });
     const config = {
@@ -89,7 +88,7 @@ function Detailblog() {
         console.log(res.data.id);
         if (res.data.id == 0) {
           setCommentstate(true);
-          setCommentfetch(true)
+          setCommentfetch(true);
         }
         if (res.data.id == 1) {
           setCommentstate(false);
@@ -102,9 +101,9 @@ function Detailblog() {
             },
           };
           axios.get(getcommentapi, config).then((res) => {
-            if(res.status==200){
+            if (res.status == 200) {
               setBlogcomment(res.data);
-              setCommentfetch(true)
+              setCommentfetch(true);
             }
           });
         }
@@ -167,13 +166,20 @@ function Detailblog() {
                   }}
                 >
                   <h>{detailblog.username}</h>
-                  <span>{new Date(detailblog.timestamp).toLocaleTimeString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                  })}
-                   , 
-                  {new Date(detailblog.timestamp).toLocaleDateString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                  })}
+                  <span>
+                    {new Date(detailblog.timestamp).toLocaleTimeString(
+                      "en-IN",
+                      {
+                        timeZone: "Asia/Kolkata",
+                      }
+                    )}
+                    ,
+                    {new Date(detailblog.timestamp).toLocaleDateString(
+                      "en-IN",
+                      {
+                        timeZone: "Asia/Kolkata",
+                      }
+                    )}
                   </span>
                 </div>
               </div>
@@ -194,7 +200,7 @@ function Detailblog() {
             </div>
           </div>
           <div className="dblog_img">
-          <img  src={`data:image/jpeg;base64,${detailblog.postimg}`} />
+            <img src={`data:image/jpeg;base64,${detailblog.postimg}`} />
           </div>
 
           <div className="blog_content_body">
@@ -262,37 +268,67 @@ function Detailblog() {
 
           <div className="message_section">
             <h style={{ fontSize: "20px", fontWeight: "bold" }}>Comments</h>
-            {commentfetch?<>
-            {blogcomment[0]?<>
-              <div className="comments_user">
-              {blogcomment.map((obj) => (
-                <>
-                  <div className="user_detail_icons">
-                    <AccountCircleTwoToneIcon />
-                    <span
-                      style={{
-                        fontSize: "15px",
-                        fontWeight: "bold",
-                        marginLeft: "5px",
-                        marginRight: "5px",
-                      }}
-                    >
-                      {obj.username}
-                    </span>
-                    <span style={{ fontWeight: "lighter" }}>{obj.timestamp}</span>
+            {commentfetch ? (
+              <>
+                {blogcomment[0] ? (
+                  <>
+                    <div className="comments_user">
+                      {blogcomment.map((obj) => (
+                        <>
+                          <div className="user_detail_icons">
+                            <AccountCircleTwoToneIcon />
+                            <span
+                              style={{
+                                fontSize: "15px",
+                                fontWeight: "bold",
+                                marginLeft: "5px",
+                                marginRight: "5px",
+                              }}
+                            >
+                              {obj.username}
+                            </span>
+                            <span style={{ color: "#808080" }}>
+                              {new Date(obj.timestamp).toLocaleTimeString(
+                                "en-IN",
+                                {
+                                  timeZone: "Asia/Kolkata",
+                                }
+                              )}
+                              ,
+                              {new Date(obj.timestamp).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  timeZone: "Asia/Kolkata",
+                                }
+                              )}
+                            </span>
+                          </div>
+                          <div className="comment">
+                            <h>{obj.comment}</h>
+                          </div>
+                        </>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ marginTop: "70px", color: "grey" }}>
+                    No Comments found for this Post
                   </div>
-                  <div className="comment">
-                    <h>{obj.comment}</h>
-                  </div>
-                </>
-              ))}
-            </div>
-            </>:<div style={{marginTop:'70px',color:'grey'}}>No Comments found for this Post</div>}
-            </>:<>
-            <div style={{display:'flex',justifyContent:'center',marginTop:'50px'}}>
-            <CircularProgress style={{color:'grey'}}/>
-            </div>
-            </>}
+                )}
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "50px",
+                  }}
+                >
+                  <CircularProgress style={{ color: "grey" }} />
+                </div>
+              </>
+            )}
           </div>
 
           <div className="fotter_mobile_blog_sec">
