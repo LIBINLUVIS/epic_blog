@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+/**
+ * after login Screen by the user 
+ * @type {string}
+ */
 function Authhome() {
   const classes = useStyles();
 

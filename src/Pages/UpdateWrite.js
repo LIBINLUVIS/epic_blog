@@ -18,6 +18,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   blog_section: {
@@ -53,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Updating the blog component
+ * @type {string}
+ */
 function UpdateWrite() {
   const { id } = useParams();
   const classes = useStyles();
@@ -63,6 +69,7 @@ function UpdateWrite() {
   const [open, setOpen] = React.useState(false);
   const [spellcheckbox, setSpellcheckbox] = useState(true);
   const [topicvalue, setTopicvalue] = useState("");
+  const [ispicselected, setIspicselected] = useState(false);
   const [publishalert, setPublishalert] = useState(false);
   const [publish, setPublish] = useState(false);
   const [postimg, setPostimg] = useState({
@@ -93,9 +100,6 @@ function UpdateWrite() {
   const updateblogpost = (e) => {
     e.preventDefault();
     setPublish(true);
-    console.log(title);
-    console.log(topic);
-    console.log(description);
     if (localStorage.getItem("user_token")) {
       const updateapi = `api/posts/updatePost/${id}`;
       const config = {
@@ -111,16 +115,18 @@ function UpdateWrite() {
         description: description,
       });
 
+
       axios
-        .put(updateapi, body, config)
-        .then((res) => {
-          console.log("blog post updated");
-          setPublishalert(true);
-          setPublish(false);
-        })
-        .catch((err) => {
-          console.log(err.data);
-        });
+      .put(updateapi,body,config)
+      .then((res) => {
+        setPublish(false);
+        setPublishalert(true);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+ 
     }
   };
 
@@ -199,10 +205,34 @@ function UpdateWrite() {
     document.getElementById("blogimg").click();
   };
   const FileSelectHandler = (event) => {
-    setPostimg({
-      selectedFile: event.target.files[0],
-    });
+    if (event.target && event.target.files[0]) {
+      // console.log(event.target.files[0]);
+      setIspicselected(true);
+      setPostimg(event.target.files[0]);
+    }
   };
+  const handleClose1 = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setIspicselected(false);
+  };
+  const action = (
+    <React.Fragment>
+      <Button color="secondary" size="small" onClick={handleClose1}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose1}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
   const closemsg = () => {
     setPublishalert(false);
   };
@@ -437,6 +467,15 @@ function UpdateWrite() {
             />
           </div>
         </form>
+        <>
+          <Snackbar
+            open={ispicselected}
+            autoHideDuration={3000}
+            onClose={handleClose1}
+            message="Image Selected"
+            action={action}
+          />
+        </>
       </div>
       {publishalert ? (
         <>
@@ -445,9 +484,7 @@ function UpdateWrite() {
               closemsg();
             }}
             style={{
-              marginTop: "10px",
-              marginLeft: "200px",
-              marginRight: "200px",
+              marginTop: "15px",
             }}
           >
             Blog Updated!

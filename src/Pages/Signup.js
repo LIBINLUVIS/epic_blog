@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+/**
+ * User signup 
+ * @type {string}
+ */
 
 function Signup() {
   const classes = useStyles();

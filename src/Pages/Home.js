@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Home Page
+ * @type {string}
+ */
+
 function Home() {
   const navigate = useNavigate();
   useEffect(() => {

@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Login Function
+ * @type {string}
+ */
 function Login() {
   const classes = useStyles();
   let { loginUser, userlogin, loginerror, networkerror } =

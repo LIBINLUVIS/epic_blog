@@ -1,4 +1,32 @@
-import React, { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/Detailblog.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/Detailblog.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import EditIcon from "@mui/icons-material/Edit";
@@ -89,7 +117,6 @@ function Detailblog() {
         console.log(res.data.id);
         if (res.data.id == 0) {
           setCommentstate(true);
-          setCommentfetch(true)
         }
         if (res.data.id == 1) {
           setCommentstate(false);
@@ -117,8 +144,8 @@ function Detailblog() {
     setComment("");
   };
   return (
-    <>
-      <div
+    &lt;>
+      &lt;div
         style={{
           overflow: "hidden",
           position: "fixed",
@@ -126,14 +153,14 @@ function Detailblog() {
         }}
         className="hide_fotter_1"
       >
-        <div className="blog_side_icons">
-          <Link to="/authhome" style={{ color: "grey" }}>
-            <HomeIcon id="home_icon_blog" fontSize="large" />
-          </Link>
-          <EditIcon id="edit_icon_blog" fontSize="large" />
-          <AutoStoriesIcon id="story_icon_blog" fontSize="large" />
-        </div>
-        <div
+        &lt;div className="blog_side_icons">
+          &lt;Link to="/authhome" style={{ color: "grey" }}>
+            &lt;HomeIcon id="home_icon_blog" fontSize="large" />
+          &lt;/Link>
+          &lt;EditIcon id="edit_icon_blog" fontSize="large" />
+          &lt;AutoStoriesIcon id="story_icon_blog" fontSize="large" />
+        &lt;/div>
+        &lt;div
           style={{
             height: "50vh",
             borderRight: "1px solid black",
@@ -145,75 +172,68 @@ function Detailblog() {
             alignItems: "center",
           }}
         >
-          <PersonIcon fontSize="large" />
-        </div>
-      </div>
-      <div className="dblog_head"></div>
-      <hr></hr>
+          &lt;PersonIcon fontSize="large" />
+        &lt;/div>
+      &lt;/div>
+      &lt;div className="dblog_head">&lt;/div>
+      &lt;hr>&lt;/hr>
       {detailblogfetch ? (
-        <>
-          <div className="blog_heading">
-            <h>{detailblog.title}</h>
-          </div>
-          <div className="user_detail">
-            <div className="user_icon_name">
-              <div className="inner_user_icon">
-                <PersonIcon fontSize="large" style={{ color: "grey" }} />
-                <div
+        &lt;>
+          &lt;div className="blog_heading">
+            &lt;h>{detailblog.title}&lt;/h>
+          &lt;/div>
+          &lt;div className="user_detail">
+            &lt;div className="user_icon_name">
+              &lt;div className="inner_user_icon">
+                &lt;PersonIcon fontSize="large" style={{ color: "grey" }} />
+                &lt;div
                   style={{
                     display: "flex",
                     flexDirection: "column",
                     paddingLeft: "15px",
                   }}
                 >
-                  <h>{detailblog.username}</h>
-                  <span>{new Date(detailblog.timestamp).toLocaleTimeString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                  })}
-                   , 
-                  {new Date(detailblog.timestamp).toLocaleDateString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                  })}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="dblog_icons">
-              {/* <FavoriteBorderTwoToneIcon fontSize='large' style={{color:'grey'}}/> */}
-              {/* <ChatBubbleRoundedIcon fontSize='large' style={{color:'grey'}}/> */}
-              <FacebookShareButton
+                  &lt;h>{detailblog.username}&lt;/h>
+                  &lt;span>just now&lt;/span>
+                &lt;/div>
+              &lt;/div>
+            &lt;/div>
+            &lt;div className="dblog_icons">
+              {/* &lt;FavoriteBorderTwoToneIcon fontSize='large' style={{color:'grey'}}/> */}
+              {/* &lt;ChatBubbleRoundedIcon fontSize='large' style={{color:'grey'}}/> */}
+              &lt;FacebookShareButton
                 url={shareurl}
                 quote={"This is an Blog Post post"}
                 hashtag={"#blog"}
               >
-                <IosShareRoundedIcon
+                &lt;IosShareRoundedIcon
                   fontSize="large"
                   style={{ color: "grey" }}
                 />
-              </FacebookShareButton>
-            </div>
-          </div>
-          <div className="dblog_img">
-          <img  src={`data:image/jpeg;base64,${detailblog.postimg}`} />
-          </div>
+              &lt;/FacebookShareButton>
+            &lt;/div>
+          &lt;/div>
+          &lt;div className="dblog_img">
+            &lt;img src={blogimg} />
+          &lt;/div>
 
-          <div className="blog_content_body">
-            <p>{detailblog.description}</p>
-          </div>
-          <hr></hr>
-          <div className="comment_sec">
-            {/* <AccountCircleTwoToneIcon style={{marginRight:'20px'}}/> */}
-            <div className="comment_text">
-              <div className="comment_box_sec">
+          &lt;div className="blog_content_body">
+            &lt;p>{detailblog.description}&lt;/p>
+          &lt;/div>
+          &lt;hr>&lt;/hr>
+          &lt;div className="comment_sec">
+            {/* &lt;AccountCircleTwoToneIcon style={{marginRight:'20px'}}/> */}
+            &lt;div className="comment_text">
+              &lt;div className="comment_box_sec">
                 {commentstate ? (
-                  <>
-                    <TextField
+                  &lt;>
+                    &lt;TextField
                       id="standard-textarea"
                       label=""
                       error
                       placeholder="Write a comment"
                       multiline
-                      helperText="The Comment you entered is unacceptable."
+                      helperText="The Comment You Entered is Bad"
                       onChange={(e) => {
                         setComment(e.target.value);
                       }}
@@ -221,10 +241,10 @@ function Detailblog() {
                       variant="standard"
                       fullWidth
                     />
-                  </>
+                  &lt;/>
                 ) : (
-                  <>
-                    <TextField
+                  &lt;>
+                    &lt;TextField
                       id="standard-textarea"
                       label=""
                       placeholder="Write a comment"
@@ -236,40 +256,40 @@ function Detailblog() {
                       variant="standard"
                       fullWidth
                     />
-                  </>
+                  &lt;/>
                 )}
-              </div>
-              <div
+              &lt;/div>
+              &lt;div
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
                   paddingTop: "10px",
                 }}
               >
-                <Button
+                &lt;Button
                   variant="outlined"
                   style={{ marginRight: "10px" }}
                   onClick={cancelcomment}
                 >
                   cancel
-                </Button>
-                <Button variant="outlined" onClick={makecomment}>
+                &lt;/Button>
+                &lt;Button variant="outlined" onClick={makecomment}>
                   comment
-                </Button>
-              </div>
-            </div>
-          </div>
+                &lt;/Button>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
 
-          <div className="message_section">
-            <h style={{ fontSize: "20px", fontWeight: "bold" }}>Comments</h>
-            {commentfetch?<>
-            {blogcomment[0]?<>
-              <div className="comments_user">
+          &lt;div className="message_section">
+            &lt;h style={{ fontSize: "20px", fontWeight: "bold" }}>Comments&lt;/h>
+            {commentfetch?&lt;>
+            {blogcomment[0]?&lt;>
+              &lt;div className="comments_user">
               {blogcomment.map((obj) => (
-                <>
-                  <div className="user_detail_icons">
-                    <AccountCircleTwoToneIcon />
-                    <span
+                &lt;>
+                  &lt;div className="user_detail_icons">
+                    &lt;AccountCircleTwoToneIcon />
+                    &lt;span
                       style={{
                         fontSize: "15px",
                         fontWeight: "bold",
@@ -278,25 +298,25 @@ function Detailblog() {
                       }}
                     >
                       {obj.username}
-                    </span>
-                    <span style={{ fontWeight: "lighter" }}>{obj.timestamp}</span>
-                  </div>
-                  <div className="comment">
-                    <h>{obj.comment}</h>
-                  </div>
-                </>
+                    &lt;/span>
+                    &lt;span style={{ fontWeight: "lighter" }}>just now&lt;/span>
+                  &lt;/div>
+                  &lt;div className="comment">
+                    &lt;h>{obj.comment}&lt;/h>
+                  &lt;/div>
+                &lt;/>
               ))}
-            </div>
-            </>:<div style={{marginTop:'70px',color:'grey'}}>No Comments found for this Post</div>}
-            </>:<>
-            <div style={{display:'flex',justifyContent:'center',marginTop:'50px'}}>
-            <CircularProgress style={{color:'grey'}}/>
-            </div>
-            </>}
-          </div>
+            &lt;/div>
+            &lt;/>:&lt;div style={{marginTop:'70px',color:'grey'}}>No Comments found for this Post&lt;/div>}
+            &lt;/>:&lt;>
+            &lt;div style={{display:'flex',justifyContent:'center',marginTop:'50px'}}>
+            &lt;CircularProgress style={{color:'grey'}}/>
+            &lt;/div>
+            &lt;/>}
+          &lt;/div>
 
-          <div className="fotter_mobile_blog_sec">
-            <div
+          &lt;div className="fotter_mobile_blog_sec">
+            &lt;div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -307,24 +327,24 @@ function Detailblog() {
                 alignItems: "center",
               }}
             >
-              <Link to="/authhome">
-                <HomeIcon fontSize="large" style={{ color: "grey" }} />
-              </Link>
-              <Link to="/write">
-                <EditIcon fontSize="large" style={{ color: "grey" }} />
-              </Link>
-              <Link to="">
-                <AutoStoriesIcon fontSize="large" style={{ color: "grey" }} />
-              </Link>
-              <Link to="/dashboard">
-                <PersonIcon fontSize="large" style={{ color: "grey" }} />
-              </Link>
-            </div>
-          </div>
-        </>
+              &lt;Link to="/authhome">
+                &lt;HomeIcon fontSize="large" style={{ color: "grey" }} />
+              &lt;/Link>
+              &lt;Link to="/write">
+                &lt;EditIcon fontSize="large" style={{ color: "grey" }} />
+              &lt;/Link>
+              &lt;Link to="">
+                &lt;AutoStoriesIcon fontSize="large" style={{ color: "grey" }} />
+              &lt;/Link>
+              &lt;Link to="/dashboard">
+                &lt;PersonIcon fontSize="large" style={{ color: "grey" }} />
+              &lt;/Link>
+            &lt;/div>
+          &lt;/div>
+        &lt;/>
       ) : (
-        <>
-          <Backdrop
+        &lt;>
+          &lt;Backdrop
             sx={{
               color: "#fff",
               zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -332,19 +352,42 @@ function Detailblog() {
             open={open}
             onClick={handleclose}
           >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        </>
+            &lt;CircularProgress color="inherit" />
+          &lt;/Backdrop>
+        &lt;/>
       )}
-      <div
+      &lt;div
         style={{ textAlign: "center", height: "50px", marginTop: "10px" }}
         className="hide_fotter_1"
       >
-        <hr style={{ width: "99%" }}></hr>
-        <p>© 2022 All rights reserved.</p>
-      </div>
-    </>
+        &lt;hr style={{ width: "99%" }}>&lt;/hr>
+        &lt;p>© 2022 All rights reserved.&lt;/p>
+      &lt;/div>
+    &lt;/>
   );
 }
 
 export default Detailblog;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Allblogs">Allblogs</a></li><li><a href="global.html#Authhome">Authhome</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#Blogs">Blogs</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#Detailblog">Detailblog</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Read">Read</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#UpdateWrite">UpdateWrite</a></li><li><a href="global.html#UserProvider">UserProvider</a></li><li><a href="global.html#Write">Write</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Sun Oct 23 2022 00:36:45 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,11 +1,40 @@
-import React, { useState, useRef } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/UpdateWrite.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/UpdateWrite.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "../Styles/write.css";
 import TextField from "@mui/material/TextField";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
-import Alert from "@mui/material/Alert";
+import VideocamIcon from "@mui/icons-material/Videocam";
 import Autocomplete from "@mui/material/Autocomplete";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
@@ -14,11 +43,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import CopyAllIcon from "@mui/icons-material/CopyAll";
 import copy from "copy-to-clipboard";
 import Snackbar from "@mui/material/Snackbar";
-import CircularProgress from "@mui/material/CircularProgress";
-import SpellcheckIcon from "@mui/icons-material/Spellcheck";
+import Alert from "@mui/material/Alert";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   blog_section: {
@@ -52,16 +79,14 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "50px",
     },
   },
-
-
-
 }));
 
 /**
- * blog Writeing Component
+ * Updating the blog component
  * @type {string}
  */
-function Write() {
+function UpdateWrite() {
+  const { id } = useParams();
   const classes = useStyles();
   const [img, setImg] = useState(false);
   const [spell, setSpell] = useState("");
@@ -70,66 +95,65 @@ function Write() {
   const [open, setOpen] = React.useState(false);
   const [spellcheckbox, setSpellcheckbox] = useState(true);
   const [topicvalue, setTopicvalue] = useState("");
-  const [publish, setPublish] = useState(false);
-  const [ispicselected, setIspicselected] = useState(false);
   const [publishalert, setPublishalert] = useState(false);
-
+  const [publish, setPublish] = useState(false);
   const [postimg, setPostimg] = useState({
     selectedFile: null,
   });
-
   const [blogpost, setBlogpost] = useState({
     title: "",
     topic: "",
     description: "",
   });
+
+  useEffect(() => {
+    axios
+      .get(`api/posts/fetchonepost/${id}`)
+      .then((res) => {
+        setBlogpost({
+          title: res.data.title,
+          topic: res.data.topic,
+          description: res.data.description,
+        });
+      });
+  }, []);
+
   const { title, topic, description } = blogpost;
   const onChange = (e) =>
     setBlogpost({ ...blogpost, [e.target.name]: e.target.value });
-  const onSubmit = (e) => {
+
+  const updateblogpost = (e) => {
     e.preventDefault();
     setPublish(true);
+    console.log(title);
+    console.log(topic);
+    console.log(description);
+    if (localStorage.getItem("user_token")) {
+      const updateapi = `api/posts/updatePost/${id}`;
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("user_token"),
+        },
+      };
 
-    const postapi = "api/posts/createPost";
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("user_token"),
-      },
-    };
-    const fd = new FormData();
-    fd.append("description", description);
-    fd.append("title", title);
-    fd.append("topic", topicvalue);
-    fd.append("postimg", postimg);
-
-    // const body = JSON.stringify({
-    //   description: description,
-    //   title: title,
-    //   topic: topicvalue,
-    // });
-
-    //   axios
-    //     .post(postapi, body, config)
-    //     .then((res) => {
-    //       setPublish(false);
-    //       setPublishalert(true);
-    //       console.log(res.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.data);
-    //     });
-    // };
-    axios
-      .post(postapi, fd, config)
-      .then((res) => {
-        setPublish(false);
-        setPublishalert(true);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.data);
+      const body = JSON.stringify({
+        title: title,
+        topic: topicvalue,
+        description: description,
       });
+
+      axios
+        .put(updateapi, body, config)
+        .then((res) => {
+          console.log("blog post updated");
+          setPublishalert(true);
+          setPublish(false);
+        })
+        .catch((err) => {
+          console.log(err.data);
+        });
+    }
   };
 
   const options = [
@@ -169,7 +193,7 @@ function Write() {
     const controller = new AbortController();
 
     await axios
-      .get(`http://20.96.230.129/api/spellcheck/${word}/`, {
+      .get(`api/spellcheck/${word}/`, {
         signal: controller.signal,
       })
       .then((res) => {
@@ -179,25 +203,22 @@ function Write() {
       });
     controller.abort();
 
-    setBlogwrite(false);
-    const spellapi = "api/spellcheck";
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const body = JSON.stringify({
-      spell: e.target.value,
-    });
-    await axios
-      .post(spellapi, body, config)
-      .then((res) => {
-        setResult(res.data);
-        setBlogwrite(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    //  setBlogwrite(false)
+    //  const spellapi="http://127.0.0.1:8000/api/spellcheck"
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // };
+    // const body = JSON.stringify({
+    //     spell:e.target.value
+    // });
+    // await axios.post(spellapi,body,config).then((res)=>{
+    //   setResult(res.data)
+    //   setBlogwrite(true)
+    // }).catch((err)=>{
+    //   console.log(err)
+    // })
   };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -209,58 +230,32 @@ function Write() {
   const uploadimg = () => {
     document.getElementById("blogimg").click();
   };
-
   const FileSelectHandler = (event) => {
-    if (event.target && event.target.files[0]) {
-      // console.log(event.target.files[0]);
-      setIspicselected(true);
-      setPostimg(event.target.files[0]);
-    }
+    setPostimg({
+      selectedFile: event.target.files[0],
+    });
   };
-  const handleClose1 = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setIspicselected(false);
-  };
-  const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose1}>
-        UNDO
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose1}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
   const closemsg = () => {
     setPublishalert(false);
   };
 
   return (
-    <>
-      <div className="write_section">
-        <form onSubmit={(e) => onSubmit(e)}>
-          <div className="dashback_logout">
-            <div style={{ display: "flex" }}>
-              <ArrowBackIcon style={{ color: "#808080" }} />
-              <Link
+    &lt;>
+      &lt;div className="write_section">
+        &lt;form onSubmit={(e) => updateblogpost(e)}>
+          &lt;div className="dashback_logout">
+            &lt;div style={{ display: "flex" }}>
+              &lt;ArrowBackIcon style={{ color: "#808080" }} />
+              &lt;Link
                 to="/authhome"
                 style={{ textDecorationLine: "none", color: "GrayText" }}
               >
-                <h>Go back</h>
-              </Link>
-            </div>
+                &lt;h>Go back&lt;/h>
+              &lt;/Link>
+            &lt;/div>
             {!publish ? (
-              <>
-                <button
+              &lt;>
+                &lt;button
                   style={{
                     fontWeight: "bold",
                     backgroundColor: "#FF6719",
@@ -273,12 +268,12 @@ function Write() {
                   }}
                   type="submit"
                 >
-                  Publish
-                </button>
-              </>
+                  Update
+                &lt;/button>
+              &lt;/>
             ) : (
-              <>
-                <button
+              &lt;>
+                &lt;button
                   style={{
                     fontWeight: "bold",
                     backgroundColor: "#FF6719",
@@ -291,20 +286,19 @@ function Write() {
                   }}
                   type="submit"
                 >
-                  <CircularProgress
+                  &lt;CircularProgress
                     style={{ height: "25px", width: "25px", color: "white" }}
                   />
-                </button>
-              </>
+                &lt;/button>
+              &lt;/>
             )}
-          </div>
+          &lt;/div>
 
-          <div className={classes.blog_section}>
-            <TextField
+          &lt;div className={classes.blog_section}>
+            &lt;TextField
               id="standard-helperText"
               label=""
               defaultValue="Title"
-              placeholder="Title"
               helperText=""
               variant="standard"
               value={title}
@@ -312,13 +306,13 @@ function Write() {
               onChange={(e) => onChange(e)}
               inputProps={{ style: { fontSize: 35, fontFamily: "serif" } }}
             />
-          </div>
+          &lt;/div>
 
-          <div className="img_upload_tag">
-            <div className="upload_icons">
+          &lt;div className="img_upload_tag">
+            &lt;div className="upload_icons">
               {img ? (
-                <>
-                  <RemoveCircleOutlineOutlinedIcon
+                &lt;>
+                  &lt;RemoveCircleOutlineOutlinedIcon
                     style={{
                       color: "#bdbdbd",
                       width: "60px",
@@ -327,12 +321,12 @@ function Write() {
                     }}
                     onClick={closeimg}
                   />
-                  <button
+                  &lt;button
                     type="button"
                     onClick={uploadimg}
                     style={{ backgroundColor: "white", border: "none" }}
                   >
-                    <CameraAltIcon
+                    &lt;CameraAltIcon
                       style={{
                         color: "#bdbdbd",
                         width: "55px",
@@ -340,18 +334,18 @@ function Write() {
                         cursor: "pointer",
                       }}
                     />
-                  </button>
-                  <input
+                  &lt;/button>
+                  &lt;input
                     id="blogimg"
                     type="file"
                     style={{ display: "none" }}
                     onChange={FileSelectHandler}
                   />
-                  {/* <VideocamIcon style={{color:'#bdbdbd',width:'60px',height:'60px',cursor:'pointer'}}/> */}
-                </>
+                  {/* &lt;VideocamIcon style={{color:'#bdbdbd',width:'60px',height:'60px',cursor:'pointer'}}/> */}
+                &lt;/>
               ) : (
-                <>
-                  <AddCircleOutlineOutlinedIcon
+                &lt;>
+                  &lt;AddCircleOutlineOutlinedIcon
                     style={{
                       color: "#bdbdbd",
                       width: "60px",
@@ -360,35 +354,35 @@ function Write() {
                     }}
                     onClick={addimg}
                   />
-                </>
+                &lt;/>
               )}
-            </div>
-            <Autocomplete
+            &lt;/div>
+            &lt;Autocomplete
               disablePortal
               onChange={(event, value) => setTopicvalue(value.label)}
               id="combo-box-demo"
               options={options}
               sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Topic" />}
+              renderInput={(params) => &lt;TextField {...params} label="Topic" />}
             />
-          </div>
+          &lt;/div>
 
           {spellcheckbox ? (
-            <>
-              <diV className="text_recomm">
-                <div
+            &lt;>
+              &lt;diV className="text_recomm">
+                &lt;div
                   style={{
                     display: "flex",
                     alignItems: "center",
                     margin: "20px",
                   }}
                 >
-                  <h>Spell checker</h>
-                </div>
-                <div style={{ display: "flex" }}>
+                  &lt;h>Spell checker&lt;/h>
+                &lt;/div>
+                &lt;div style={{ display: "flex" }}>
                   {blogwrite ? (
-                    <>
-                      <TextField
+                    &lt;>
+                      &lt;TextField
                         id="outlined-basic"
                         value={result.result}
                         variant="outlined"
@@ -396,10 +390,10 @@ function Write() {
                         color="grey"
                         style={{ width: "500px" }}
                       />
-                    </>
+                    &lt;/>
                   ) : (
-                    <>
-                      <TextField
+                    &lt;>
+                      &lt;TextField
                         id="outlined-basic"
                         value={result.result}
                         variant="outlined"
@@ -407,16 +401,16 @@ function Write() {
                         color="success"
                         style={{ width: "500px" }}
                       />
-                    </>
+                    &lt;/>
                   )}
-                  <div
+                  &lt;div
                     style={{
                       display: "flex",
                       alignItems: "center",
                       margin: "20px",
                     }}
                   >
-                    <CloseIcon
+                    &lt;CloseIcon
                       style={{
                         width: "30px",
                         height: "30px",
@@ -425,7 +419,7 @@ function Write() {
                       }}
                       onClick={spellcheckclose}
                     />
-                    <CopyAllIcon
+                    &lt;CopyAllIcon
                       style={{
                         width: "30px",
                         height: "30px",
@@ -434,14 +428,14 @@ function Write() {
                       }}
                       onClick={textcopy}
                     />
-                  </div>
-                </div>
-              </diV>
-            </>
+                  &lt;/div>
+                &lt;/div>
+              &lt;/diV>
+            &lt;/>
           ) : (
-            <>
-              <div className="text_recomm1">
-                <SpellcheckIcon
+            &lt;>
+              &lt;div className="text_recomm1">
+                &lt;AddCircleOutlineOutlinedIcon
                   style={{
                     color: "#bdbdbd",
                     width: "50px",
@@ -450,22 +444,22 @@ function Write() {
                   }}
                   onClick={addspellcheck}
                 />
-              </div>
-            </>
+              &lt;/div>
+            &lt;/>
           )}
 
-          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-            <Alert
+          &lt;Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            &lt;Alert
               severity="success"
               sx={{ width: "100%" }}
               onClose={handleClose}
             >
               content copied!
-            </Alert>
-          </Snackbar>
+            &lt;/Alert>
+          &lt;/Snackbar>
 
-          <div className={classes.blog_body}>
-            <TextareaAutosize
+          &lt;div className={classes.blog_body}>
+            &lt;TextareaAutosize
               aria-label="empty textarea"
               placeholder="Body"
               value={description}
@@ -473,41 +467,56 @@ function Write() {
               className={classes.blog_body_content}
               onChange={(event) => correctspell(event)}
             />
-          </div>
-        </form>
-        <>
-          <Snackbar
-            open={ispicselected}
-            autoHideDuration={3000}
-            onClose={handleClose1}
-            message="Image Selected"
-            action={action}
-          />
-        </>
-      </div>
+          &lt;/div>
+        &lt;/form>
+      &lt;/div>
       {publishalert ? (
-        <>
-          <Alert
+        &lt;>
+          &lt;Alert
             onClose={() => {
               closemsg();
             }}
             style={{
-              marginTop: "15px",
+              marginTop: "10px",
+              marginLeft: "200px",
+              marginRight: "200px",
             }}
-           
           >
-            Blog Published!
-          </Alert>
-        </>
+            Blog Updated!
+          &lt;/Alert>
+        &lt;/>
       ) : (
-        <></>
+        &lt;>&lt;/>
       )}
-      <div style={{ textAlign: "center", height: "50px", marginTop: "307px" }}>
-        <hr style={{ width: "99%" }}></hr>
-        <p>© 2022 All rights reserved.</p>
-      </div>
-    </>
+      &lt;div style={{ textAlign: "center", height: "50px", marginTop: "307px" }}>
+        &lt;hr style={{ width: "99%" }}>&lt;/hr>
+        &lt;p>© 2022 All rights reserved.&lt;/p>
+      &lt;/div>
+    &lt;/>
   );
 }
 
-export default Write;
+export default UpdateWrite;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Allblogs">Allblogs</a></li><li><a href="global.html#Authhome">Authhome</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#Blogs">Blogs</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#Detailblog">Detailblog</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Read">Read</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#UpdateWrite">UpdateWrite</a></li><li><a href="global.html#UserProvider">UserProvider</a></li><li><a href="global.html#Write">Write</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Sun Oct 23 2022 00:36:45 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

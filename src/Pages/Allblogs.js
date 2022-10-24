@@ -16,7 +16,12 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "../Axios.js";
 
+/**
+ * Fetching All the blogs Component
+ * @type {string}
+ */
 function Allblogs() {
+
   const [selectbot, setSelectbot] = useState(false);
   const [blogpostsfetch, setBlogpostsfetch] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -35,10 +40,12 @@ function Allblogs() {
   };
 
   const [blogposts, setBlogPosts] = useState([]);
+
   useEffect(() => {
     handleToggle();
     axios.get("api/posts/allPosts").then((res) => {
       if (res.status == 200) {
+
         setBlogPosts(res.data);
         setBlogpostsfetch(true)
         handleclose();
@@ -101,7 +108,14 @@ function Allblogs() {
                             </NavLink>
                           </span>
                           <span>{obj.username}</span>
-                          <span>5 days ago</span>
+                          <span>{new Date(obj.timestamp).toLocaleTimeString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                          })}
+                          </span>
+                          <span>
+                          {new Date(obj.timestamp).toLocaleDateString("en-IN", {
+                            timeZone: "Asia/Kolkata",
+                          })}</span>
                         </div>
                         <div
                           style={{
@@ -114,7 +128,7 @@ function Allblogs() {
                           <h>{obj.title}</h>
                         </div>
                         <div className="inner_blog_body">
-                          <img src={dumyimg} />
+                        <img  src={`data:image/jpeg;base64,${obj.postimg}`} />
                           <p>
                             {obj.description}....
                             <NavLink
@@ -196,9 +210,9 @@ function Allblogs() {
               </div>
             </>
           )}
-          <div className="chatbot">
+          {/* <div className="chatbot">
             <img src={bot} onClick={chatbot} />
-          </div>
+          </div> */}
         </div>
       </div>
 

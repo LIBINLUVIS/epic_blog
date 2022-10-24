@@ -1,11 +1,38 @@
-import React, { useState, useContext, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Pages/dashboard.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Pages/dashboard.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useContext, useEffect } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link, NavLink } from "react-router-dom";
 import "../Styles/dashboard.css";
 import pic from "../assets/Ellipse 4.png";
 import TextField from "@mui/material/TextField";
-import Snackbar from "@mui/material/Snackbar";
 import Skeleton from "@mui/material/Skeleton";
 import EditIcon from "@mui/icons-material/Edit";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
@@ -15,9 +42,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import UserContext from "../Context/UserContext";
 import axios from "../Axios.js";
 import UploadIcon from "@mui/icons-material/Upload";
-import CloseIcon from "@mui/icons-material/Close";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 
 
 /**
@@ -43,7 +67,6 @@ function Dashboard() {
   const [erropen, setErropen] = useState(false);
   const [newusername, setNewusername] = useState("");
   const [uploadprogress,setUploadprogress]=useState(0);
-  const [ispicselected, setIspicselected] = useState(false);
 
   useEffect(() => {
     userposts();
@@ -154,35 +177,14 @@ function Dashboard() {
     document.getElementById("blogimg").click();
   };
   const FileSelectHandler = (event) => {
-    if (event.target && event.target.files[0]) {
-      setIspicselected(true);
+    if (event.target &amp;&amp; event.target.files[0]) {
+      console.log("pic selected");
+      console.log(event.target.files[0]);
       fd.append("image", event.target.files[0]);
     }
     // setHidecambtn(false)
     // setHideuploadbtn(true)
   };
-  const handleClose1 = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setIspicselected(false);
-  };
-  const action = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={handleClose1}>
-        UNDO
-      </Button>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose1}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
   const uploadpic = () => {
     const userdpapi = "api/auth/changedp";
     const config = {
@@ -209,35 +211,35 @@ function Dashboard() {
       });
   };
   return (
-    <div className="dashmain">
-      <div className="dashback_logout">
-        <div style={{ display: "flex" }}>
-          <ArrowBackIcon style={{ color: "#808080" }} />
-          <Link
+    &lt;div className="dashmain">
+      &lt;div className="dashback_logout">
+        &lt;div style={{ display: "flex" }}>
+          &lt;ArrowBackIcon style={{ color: "#808080" }} />
+          &lt;Link
             to="/authhome"
             style={{ textDecorationLine: "none", color: "GrayText" }}
           >
-            <h>Go back</h>
-          </Link>
-        </div>
-        <h style={{ fontWeight: "bold", cursor: "pointer" }} onClick={logout}>
+            &lt;h>Go back&lt;/h>
+          &lt;/Link>
+        &lt;/div>
+        &lt;h style={{ fontWeight: "bold", cursor: "pointer" }} onClick={logout}>
           Logout
-        </h>
-      </div>
-      <div
+        &lt;/h>
+      &lt;/div>
+      &lt;div
         style={{ display: "flex", justifyContent: "center", margin: "40px" }}
       >
-        <h1>Profile Settings</h1>
-      </div>
+        &lt;h1>Profile Settings&lt;/h1>
+      &lt;/div>
 
-      <div className="profile">
-        <div className="pic_username">
-          <div className="profile_pic">
+      &lt;div className="profile">
+        &lt;div className="pic_username">
+          &lt;div className="profile_pic">
             {userinfo ? (
-              <>
+              &lt;>
                 {userinfo.profilepic ? (
-                  <div style={{ position: "relative" }}>
-                    <img
+                  &lt;div style={{ position: "relative" }}>
+                    &lt;img
                       src={`data:image/jpeg;base64,${userinfo.profilepic}`}
                       style={{
                         width: "100px",
@@ -245,27 +247,27 @@ function Dashboard() {
                         display: "block",
                       }}
                     />
-                    {fetchdp?<div className="profilepicloader-box">
-                    <CircularProgress  className="profilepicloader" style={{color:'green'}}/>
-                    </div>:<div className="picuploadprogress-box">
-                    <CircularProgress variant="determinate" value={uploadprogress} className="picuploadprogress" />
-                    </div>}  
-                  </div>
+                    {fetchdp?&lt;div className="profilepicloader-box">
+                    &lt;CircularProgress  className="profilepicloader" style={{color:'green'}}/>
+                    &lt;/div>:&lt;div className="picuploadprogress-box">
+                    &lt;CircularProgress variant="determinate" value={uploadprogress} className="picuploadprogress" />
+                    &lt;/div>}  
+                  &lt;/div>
                 ) : (
-                  <div style={{ position: "relative" }}>
-                     <img
+                  &lt;div style={{ position: "relative" }}>
+                     &lt;img
                       src={pic}
                       style={{ width: "100px", height: "100px" }}
                     />
-                   <div className="profilepicloader-box">
-                    <CircularProgress  className="profilepicloader" style={{color:'green'}}/>
-                    </div>
-                  </div>
+                   &lt;div className="profilepicloader-box">
+                    &lt;CircularProgress  className="profilepicloader" style={{color:'green'}}/>
+                    &lt;/div>
+                  &lt;/div>
                 )}
-              </>
+              &lt;/>
             ) : (
-              <>
-                <CircularProgress
+              &lt;>
+                &lt;CircularProgress
                   style={{
                     height: "30px",
                     width: "30px",
@@ -273,33 +275,33 @@ function Dashboard() {
                     color: "grey",
                   }}
                 />
-              </>
+              &lt;/>
             )}
 
-            <button
+            &lt;button
               type="button"
               onClick={uploaduserpic}
               style={{ backgroundColor: "white", border: "none" }}
             >
-              <CameraAltIcon className="profilepicico" />
-            </button>
-            <input
+              &lt;CameraAltIcon className="profilepicico" />
+            &lt;/button>
+            &lt;input
               id="blogimg"
               type="file"
               style={{ display: "none" }}
               onChange={FileSelectHandler}
             />
 
-            <UploadIcon onClick={uploadpic} className="profileuploadico" />
-          </div>
-          <div className="profile_username">
-            <div>
-              <h>Username</h>
-            </div>
-            <div style={{ display: "flex" }}>
+            &lt;UploadIcon onClick={uploadpic} className="profileuploadico" />
+          &lt;/div>
+          &lt;div className="profile_username">
+            &lt;div>
+              &lt;h>Username&lt;/h>
+            &lt;/div>
+            &lt;div style={{ display: "flex" }}>
               {!fetchdp ? (
-                <>
-                  <TextField
+                &lt;>
+                  &lt;TextField
                     id="standard-read-only-input"
                     label=""
                     value={userinfo.username}
@@ -309,17 +311,17 @@ function Dashboard() {
                     variant="standard"
                     onChange={getupdatedval}
                   />
-                </>
+                &lt;/>
               ) : (
-                <><CircularProgress  style={{color:'blue',height:'30px',width:'30px',marginTop:'45px',margin:'5px'}}/></>
+                &lt;>&lt;CircularProgress  style={{color:'blue',height:'30px',width:'30px',marginTop:'45px',margin:'5px'}}/>&lt;/>
               )}
 
-              <EditIcon
+              &lt;EditIcon
                 style={{ color: "grey", cursor: "pointer" }}
                 onClick={makeedit}
               />
-            </div>
-            <div
+            &lt;/div>
+            &lt;div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -327,10 +329,10 @@ function Dashboard() {
               }}
             >
               {edit ? (
-                <></>
+                &lt;>&lt;/>
               ) : (
-                <>
-                  <button
+                &lt;>
+                  &lt;button
                     style={{
                       backgroundColor: "#3CB371",
                       borderRadius: "30px",
@@ -344,12 +346,12 @@ function Dashboard() {
                     onClick={changeusername}
                   >
                     Save
-                  </button>
-                </>
+                  &lt;/button>
+                &lt;/>
               )}
               {namesave ? (
-                <>
-                  <CircularProgress
+                &lt;>
+                  &lt;CircularProgress
                     style={{
                       height: "30px",
                       width: "30px",
@@ -357,17 +359,17 @@ function Dashboard() {
                       color: "green",
                     }}
                   />
-                </>
+                &lt;/>
               ) : (
-                <></>
+                &lt;>&lt;/>
               )}
-            </div>
-          </div>
-        </div>
-        <form onSubmit={UpdateUserPassword}>
-          <div className="change_password">
-            <h style={{ marginTop: "10px" }}>Change Password</h>
-            <TextField
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+        &lt;form onSubmit={UpdateUserPassword}>
+          &lt;div className="change_password">
+            &lt;h style={{ marginTop: "10px" }}>Change Password&lt;/h>
+            &lt;TextField
               id="standard-search"
               label="New Password"
               type="search"
@@ -376,7 +378,7 @@ function Dashboard() {
               value={password1}
               style={{ marginTop: "15px" }}
             />
-            <TextField
+            &lt;TextField
               id="standard-search"
               label="Confirm Password"
               type="password"
@@ -385,7 +387,7 @@ function Dashboard() {
               value={password2}
               style={{ marginTop: "15px" }}
             />
-            <button
+            &lt;button
               style={{
                 backgroundColor: "#3CB371",
                 color: "white",
@@ -398,25 +400,25 @@ function Dashboard() {
               type="submit"
             >
               Done
-            </button>
-          </div>
+            &lt;/button>
+          &lt;/div>
           {open ? (
-            <>
-              <Alert
+            &lt;>
+              &lt;Alert
                 onClose={() => {
                   closemsg();
                 }}
                 style={{ marginTop: "10px" }}
               >
                 Password Updated!
-              </Alert>
-            </>
+              &lt;/Alert>
+            &lt;/>
           ) : (
-            <></>
+            &lt;>&lt;/>
           )}
           {erropen ? (
-            <>
-              <Alert
+            &lt;>
+              &lt;Alert
                 onClose={() => {
                   closemsgerror();
                 }}
@@ -424,69 +426,53 @@ function Dashboard() {
                 severity="error"
               >
                 Password Not Updated!
-              </Alert>
-            </>
+              &lt;/Alert>
+            &lt;/>
           ) : (
-            <></>
+            &lt;>&lt;/>
           )}
-        </form>
-        <>
-          <Snackbar
-            open={ispicselected}
-            autoHideDuration={3000}
-            onClose={handleClose1}
-            message="Image Selected"
-            action={action}
-          />
-        </>
-      </div>
+        &lt;/form>
+      &lt;/div>
 
-      <div className="user_posts_head">
-        <h1>Posts</h1>
+      &lt;div className="user_posts_head">
+        &lt;h1>Posts&lt;/h1>
         {blogfetched ? (
-          <>
+          &lt;>
             {userblogpost[0] ? (
-              <>
-                <div className="user_posts">
+              &lt;>
+                &lt;div className="user_posts">
                   {userblogpost.map((obj) => (
-                    <div className="user_post">
-                      <div className="post_head">
-                        <h>{obj.title}</h>
-                        <NavLink
+                    &lt;div className="user_post">
+                      &lt;div className="post_head">
+                        &lt;h>{obj.title}&lt;/h>
+                        &lt;NavLink
                           to={`/blog/${obj._id}`}
                           style={{ color: "grey" }}
                         >
-                          <ArrowForwardIcon />
-                        </NavLink>
-                      </div>
-                      <div className="post_content">
-                      <span style={{ color: "#808080" }}>
-                          {new Date(obj.timestamp).toLocaleTimeString("en-IN", {
-                            timeZone: "Asia/Kolkata",
-                          })} , 
+                          &lt;ArrowForwardIcon />
+                        &lt;/NavLink>
+                      &lt;/div>
+                      &lt;div className="post_content">
+                        &lt;span style={{ color: "#808080" }}>
+                          jan 8 at 8:10 pm
+                        &lt;/span>
+                        &lt;div style={{ display: "flex", alignItems: "center" }}>
+                          {/* &lt;FavoriteBorderOutlinedIcon style={{color:'#808080'}}/>&lt;span>100&lt;/span> */}
+                        &lt;/div>
+                        {/* &lt;CommentIcon style={{cursor:'pointer',color:'#808080'}}/> */}
 
-                          {new Date(obj.timestamp).toLocaleDateString("en-IN", {
-                            timeZone: "Asia/Kolkata",
-                          })}
-                      </span>
-       
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          {/* <FavoriteBorderOutlinedIcon style={{color:'#808080'}}/><span>100</span> */}
-                        </div>
-                        {/* <CommentIcon style={{cursor:'pointer',color:'#808080'}}/> */}
-
-                        <DeleteIcon
+                        &lt;DeleteIcon
                           style={{ color: "#808080", cursor: "pointer" }}
                           onClick={(e) => deletepost(obj._id)}
                         />
-                        <Link to={`/updatepost/${obj._id}`}>
-                          <EditIcon
+                        &lt;Link to={`/updatepost/${obj._id}`}>
+                          &lt;EditIcon
                             style={{ color: "#808080", cursor: "pointer" }}
                           />
-                        </Link>
-                      </div>
-                      <div className="post_view">
-                        <h
+                        &lt;/Link>
+                      &lt;/div>
+                      &lt;div className="post_view">
+                        &lt;h
                           style={{
                             marginLeft: "40px",
                             fontSize: "40px",
@@ -494,42 +480,42 @@ function Dashboard() {
                           }}
                         >
                           2
-                        </h>
-                        <h style={{ color: "grey" }}>TOTAL VIEWS</h>
-                      </div>
-                    </div>
+                        &lt;/h>
+                        &lt;h style={{ color: "grey" }}>TOTAL VIEWS&lt;/h>
+                      &lt;/div>
+                    &lt;/div>
                   ))}
-                </div>
-              </>
+                &lt;/div>
+              &lt;/>
             ) : (
-              <>
-                <div
+              &lt;>
+                &lt;div
                   style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  <h1 style={{ color: "grey" }}>No Posts Yet by the user</h1>
-                </div>
-              </>
+                  &lt;h1 style={{ color: "grey" }}>No Posts Yet by the user&lt;/h1>
+                &lt;/div>
+              &lt;/>
             )}
-          </>
+          &lt;/>
         ) : (
-          <>
-            <Skeleton variant="rectangular" width={300} height={250} />
-            <Skeleton
+          &lt;>
+            &lt;Skeleton variant="rectangular" width={300} height={250} />
+            &lt;Skeleton
               variant="rectangular"
               width={300}
               height={250}
               style={{ margin: "20px" }}
             />
-            <Skeleton variant="rectangular" width={300} height={250} />
-          </>
+            &lt;Skeleton variant="rectangular" width={300} height={250} />
+          &lt;/>
         )}
-      </div>
+      &lt;/div>
 
-      <div
+      &lt;div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -537,11 +523,34 @@ function Dashboard() {
           textAlign: "center",
         }}
       >
-        <hr style={{ width: "99%" }}></hr>
-        <p>© 2022 All rights reserved.</p>
-      </div>
-    </div>
+        &lt;hr style={{ width: "99%" }}>&lt;/hr>
+        &lt;p>© 2022 All rights reserved.&lt;/p>
+      &lt;/div>
+    &lt;/div>
   );
 }
 
 export default Dashboard;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Allblogs">Allblogs</a></li><li><a href="global.html#Authhome">Authhome</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#Blogs">Blogs</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#Detailblog">Detailblog</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#Read">Read</a></li><li><a href="global.html#Signup">Signup</a></li><li><a href="global.html#UpdateWrite">UpdateWrite</a></li><li><a href="global.html#UserProvider">UserProvider</a></li><li><a href="global.html#Write">Write</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Sun Oct 23 2022 00:36:45 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -16,6 +16,11 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "../Axios.js";
 
+
+/**
+ * Fetching the blogs with category
+ * @type {string}
+ */
 function Blogs() {
   const { id } = useParams();
   console.log(id);
@@ -79,7 +84,10 @@ function Blogs() {
             <HomeIcon id="home_icon_blog" fontSize="large" />
           </Link>
           <EditIcon id="edit_icon_blog" fontSize="large" />
+          <Link to='/Read' style={{cursor:'pointer',color:'grey'}}>
           <AutoStoriesIcon id="story_icon_blog" fontSize="large" />
+          </Link>
+          
         </div>
         <div
           style={{
@@ -127,7 +135,17 @@ function Blogs() {
                             </NavLink>
                           </span>
                           <span>{obj.username}</span>
-                          <span>{obj.timestamp}</span>
+                          <span>{
+                            new Date(obj.timestamp).toLocaleTimeString("en-IN", {
+                              timeZone: "Asia/Kolkata",
+                            })}
+                          </span>
+                          <span>
+                            {
+                              new Date(obj.timestamp).toLocaleDateString("en-IN", {
+                                timeZone: "Asia/Kolkata",
+                              })}
+                          </span>
                         </div>
                         <div
                           style={{
@@ -140,7 +158,7 @@ function Blogs() {
                           <h>{obj.title}</h>
                         </div>
                         <div className="inner_blog_body">
-                          <img src={dumyimg} />
+                        <img  src={`data:image/jpeg;base64,${obj.postimg}`} />
                           <p>{obj.description}....</p>
 
                           {/* <NavLink to={`/blog/${obj._id}`} style={{textDecoration:'none',cursor:'pointer'}}>
@@ -220,9 +238,9 @@ function Blogs() {
               </div>
             </>
           )}
-          <div className="chatbot">
+          {/* <div className="chatbot">
             <img src={bot} onClick={chatbot} />
-          </div>
+          </div> */}
         </div>
       </div>
 
