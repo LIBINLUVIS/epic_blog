@@ -106,7 +106,7 @@ function Blogs() {
       </div>
 
       <div className="blog_head">
-        <h1>Inbox</h1>
+        <h1>Inbox.</h1>
         {/* <div className='text_area1'>
      <TextField id="standard-basic" label="" variant="standard" style={{marginTop:'9px'}}/>
      <SearchIcon style={{marginTop:'10px',color:'grey',cursor:'pointer'}}/>
